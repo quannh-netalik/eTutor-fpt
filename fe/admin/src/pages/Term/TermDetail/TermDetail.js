@@ -138,6 +138,11 @@ const FacultyDetail = ({ history, match }) => {
                     </Form>
                 </Col>
                 <Col>
+                    <Row className="justify-content-center">
+                        <div style={{ fontWeight: 'bold', fontSize: '20px' }}>
+                            <strong>Created By</strong>
+                        </div>
+                    </Row>
                     <Row>
                         <Col>
                             <Image src={`${AWS_FOLDER.IMAGE}${term?.createdBy?.profile?.avatar}`} rounded fluid />
