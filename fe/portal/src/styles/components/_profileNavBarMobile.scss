@@ -1,0 +1,91 @@
+@mixin profile-mobile-wrapper__profile{
+  .profile-mobile-container{
+    text-align: center;
+    margin: 0px auto;
+    .profile-mobile-container__iconback{
+      background-repeat: no-repeat;
+      background-size: cover;
+      @include background-image(20px,20px);
+      margin-left: 26px;
+    }
+    .profile-mobile-container__avatar{
+      height: 110px;
+      width: 110px;
+      text-align: center;
+      margin:0px auto;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 110px;
+      .profile-mobile-container__icon{
+        position: relative;
+        bottom: -70px;
+        right: -75px;
+        width: 41px;
+        height: 41px;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        // width : 30px;
+        // height : 30px;
+        border-radius: 50%;
+        // text-align: center;
+        background-color: $purple-level-0;
+        .toggle__icon{
+          display: inline !important;
+          font-size:30px;
+          color: rgba(255,255,255, 1);
+          margin-top: 5px;
+        }
+        .toggle__badge{
+          width: 10px;
+          height: 10px;
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          color:white;
+          border-radius: 50%;
+          background-color:theme-color-level(danger, -3);
+          -webkit-user-select: none;
+            -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
+        }
+      }
+    }
+
+    .profile-mobile-container__name{
+      font-size: 26px;
+      line-height: 26px;
+      font-weight: 700;
+      margin-top: 20px;
+    }
+
+    .profile-mobile-container__email{
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 15px;
+    }
+
+    .profile-mobile-container__item{
+      text-align:center;
+      .profile-mobile-container__item__link{
+        margin-top:30px !important;
+        .profile-mobile-container__item__nav-link{
+          margin : 100px 0px;
+          font-size:18px;
+          color:#000;
+          text-decoration: none;
+          -webkit-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
+          margin: 0 15px;
+          -webkit-transition: all 0.2s;
+          -o-transition: all 0.2s;
+          transition: all 0.2s;
+        }
+
+      }
+    }
+  }
+}

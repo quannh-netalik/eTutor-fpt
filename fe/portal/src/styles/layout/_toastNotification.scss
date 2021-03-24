@@ -1,0 +1,132 @@
+.toast-notification-container{
+  position: fixed;
+  z-index: 9999;
+  top: 90px;
+  right: 20px;
+  width: 300px;
+  .toast--fadeIn {
+    -webkit-transform:translateY(15px);
+        -ms-transform:translateY(15px);
+            transform:translateY(15px);
+    opacity: 1;
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+  .toast--fadeOut{
+    -webkit-transform:translateY(-15px);
+        -ms-transform:translateY(-15px);
+            transform:translateY(-15px);
+    opacity: 0;
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+  .toast__header {
+    .header__icon {
+      margin-right: 10px;
+      font-size: 16px;
+      -webkit-transform: translateY(1.5px);
+          -ms-transform: translateY(1.5px);
+              transform: translateY(1.5px);
+    }
+
+  }
+  .toast__header--error {
+    background-color: theme-color-level(danger, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'danger')
+    }
+  }
+  .toast__header--info {
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'info')
+    }
+  }
+  .toast__header--warning {
+    background-color: theme-color-level(warning, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'warning')
+    }
+  }
+  .toast__header--success {
+    background-color: theme-color-level(success, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'success')
+    }
+  }
+
+  .toast__header--message {
+    background-color: theme-color-level(message, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'message')
+    }
+  }
+}
+
+.toast-notification-container-mobile{
+  position: fixed;
+  z-index: 9999;
+  top: 90px;
+  right: 10px;
+  width: 250px;
+  .toast--fadeIn {
+    -webkit-transform:translateY(15px);
+        -ms-transform:translateY(15px);
+            transform:translateY(15px);
+    opacity: 1;
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+  .toast--fadeOut{
+    -webkit-transform:translateY(-15px);
+        -ms-transform:translateY(-15px);
+            transform:translateY(-15px);
+    opacity: 0;
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+  .toast__header {
+    .header__icon {
+      margin-right: 10px;
+      font-size: 13px;
+      -webkit-transform: translateY(1.5px);
+          -ms-transform: translateY(1.5px);
+              transform: translateY(1.5px);
+    }
+
+  }
+  .toast__header--error {
+    background-color: theme-color-level(danger, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'danger')
+    }
+  }
+  .toast__header--info {
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'info')
+    }
+  }
+  .toast__header--warning {
+    background-color: theme-color-level(warning, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'warning')
+    }
+  }
+  .toast__header--success {
+    background-color: theme-color-level(success, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'success')
+    }
+  }
+
+  .toast__header--message {
+    background-color: theme-color-level(message, -11);
+    .header__icon {
+      color: map-get($map: $theme-colors, $key: 'message')
+    }
+  }
+}
+

@@ -1,0 +1,35 @@
+{
+    "name": "be",
+    "version": "1.0.0",
+    "description": "eTutor System",
+    "license": "ISC",
+    "author": "Nguyen Huu Quan",
+    "main": "index.js",
+    "type": "module",
+    "dependencies": {
+        "adm-zip": "^0.5.4",
+        "aws-sdk": "^2.868.0",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-validator": "^6.10.0",
+        "http-errors": "^1.8.0",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.21",
+        "md5": "^2.3.0",
+        "mongodb": "^3.6.5",
+        "mongoose": "^5.12.1",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.2"
+    },
+    "devDependencies": {
+        "eslint": "^7.22.0"
+    },
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": []
+}

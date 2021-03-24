@@ -1,0 +1,38 @@
+.connection-modal{
+  .connection-modal__dialog{
+    .modal-content {
+      border:none;
+      .modal-header{
+        border-bottom: none;
+        .connection-modal__title{
+          margin:auto;
+        }
+      }
+
+      .connection-modal__login-modal__form{
+        padding: 0px 25px 20px 25px;
+      }
+
+      .form__success-message {
+        color: theme-color-level(success, -3);
+        text-align: center;
+      }
+      .form__button{
+        margin: 10px 0px;
+      }
+
+      .form__bottom-link{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        .bottom-link__link{
+          font-size: 13.5px;
+        }
+      }
+
+    }
+  }
+}

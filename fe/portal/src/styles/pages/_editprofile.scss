@@ -1,0 +1,118 @@
+.profile-container {
+  margin-top: 30px;
+  .profile-container__tab{
+    // -webkit-box-shadow : 0px 2px 5px 1px $purple-level-3;
+    //         box-shadow : 0px 2px 5px 1px $purple-level-3;
+    // border-radius: 8px;
+    .profile-container__tab__item{
+      border-radius: 8px;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 20px;
+      //text-align: center;
+      &:hover{
+        cursor: pointer;
+        background-color: $purple-level-3;
+        -webkit-box-shadow : 0px 2px 5px 1px $purple-level-3;
+        box-shadow : 0px 2px 5px 1px $purple-level-3;
+      }
+
+    }
+    .choose{
+      -webkit-box-shadow : 0px 2px 5px 1px $purple-level-3;
+      box-shadow : 0px 2px 5px 1px $purple-level-3;
+      background-color: $purple-level-3;
+      font-weight: 700;
+    }
+  }
+  .profile-container__information{
+    border-radius: 8px;
+    padding: 20px;
+    .information__title{
+      font-size: 25px;
+      font-weight: 600;
+    }
+    .information__icon-back{
+      margin-left: calc(100% - 30px);
+      @include background-image(30px, 30px);
+      &:hover{
+        cursor: pointer;
+        opacity: 0.8;
+      }
+    }
+    .information__row{
+      margin: 25px 0;
+      .form-label{
+        font-weight: 700;
+        font-size: 16px !important;
+      }
+      .form-control{
+        border-radius: none !important;
+        border: 1px solid !important;
+      }
+    }
+
+    .information__avatar{
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 50%;
+      &:hover{
+        cursor: pointer;
+        .avatar__active{
+          top: -40px;
+        }
+      }
+      .avatar__input {
+        width: 150px;
+        height: 150px;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+      .avatar__active{
+        position: relative;
+        top: 40px;
+        height: 40px;
+        padding-top: 5px;
+        color: $white;
+        font-size: 10px;
+        background-color: $black;
+        text-align: center;
+        transition: top 0.5s;
+      }
+    }
+
+    .information__wrapper-filter{
+      width: auto;
+      margin-left: 15px;
+      .wrapper-filter__label{
+        display: flex;
+        .label__text{
+          font-weight: 700;
+          font-size: 16px !important;
+          margin-bottom: 15px;
+          margin-top: 15px;
+          word-break: keep-all;
+        }
+        .label__require{
+          position: relative;
+          top: 5px;
+          left: 5px;
+          font-size: 30px;
+        }
+
+        .label__require--error{
+          color: red !important;
+        }
+      }
+    }
+    
+    .information__button-save{
+      width: 250px;
+      font-weight: 400 !important;
+      float: right;
+      margin: 20px 0px 40px 0px;
+    }
+  }
+}

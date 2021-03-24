@@ -1,0 +1,43 @@
+.container-volume{
+  position: absolute;
+  z-index: 5;
+  top : calc(100vh - 200px);
+  right : 30px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  .container-volume-button{
+    height: 36px;
+    width: 36px;
+    // background: rgba(255,255,255, 0.75);
+    &:hover{
+      //background:rgba(255,255,255, 1);
+      cursor:pointer;
+    }
+    text-align: center;
+    margin-top:10px;
+    font-size: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.35);
+    -moz-box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.35);
+    -o-box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.35);
+    -ms-box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.35);
+    box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.35);
+    .volume__icon{
+      @include background-image(36px, 36px);
+      &:hover{
+        filter: brightness(0.7);//invert(0.6) sepia(0) saturate(1) hue-rotate(0deg) brightness(2);
+      }
+    }
+  }
+  .disabled {
+    cursor: not-allowed !important;
+    .volume__icon{
+      filter: brightness(0.5); //invert(0.77) sepia(0) saturate(1) hue-rotate(0deg) brightness(2);
+    }
+  }
+}
