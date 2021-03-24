@@ -1,13 +1,5 @@
 version: "2"
 services:
-  etutor-fe-admin:
-    build:
-      context: ./fe/admin
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    container_name: etutor-fe-admin
-    restart: always
   etutor-be:
     build:
       context: ./be
@@ -15,4 +7,12 @@ services:
     ports:
       - "5000:5000"
     container_name: etutor-be
+    restart: always
+  etutor-fe-admin:
+    build:
+      context: ./fe/admin
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    container_name: etutor-fe-admin
     restart: always
