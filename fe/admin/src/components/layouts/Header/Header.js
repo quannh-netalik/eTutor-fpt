@@ -5,12 +5,13 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import './index.css';
 import { logoutAction } from '../../../actions/user.action';
 
-const Header = () => {
+const Header = ({ history }) => {
     const { user } = useSelector(({ userLogin }) => userLogin);
     const dispatch = useDispatch();
 
     const logoutHandler = () => {
         dispatch(logoutAction());
+        history.push('/login');
     };
 
     return (
