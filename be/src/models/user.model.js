@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
         },
         faculty: { type: mongoose.Schema.Types.ObjectId, ref: 'faculties' },
     },
+    isDeleted: { type: Boolean, default: false },
 }, { timestamps: true });
 
 UserSchema.pre('save', async function save(next) {
