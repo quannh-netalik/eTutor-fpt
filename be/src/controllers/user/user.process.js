@@ -35,6 +35,24 @@ export const loginAuthentication = async ({ email, password }) => {
     return response;
 };
 
+export const getUserService = async (id) => {
+    const response = {
+        statusCode: 200,
+        message: 'User detail get successful',
+        data: {},
+    };
+
+    try {
+        const user = await User.findById(id);
+        response.data = user;
+    } catch (err) {
+        response.statusCode = 500;
+        response.message = err.message;
+    }
+
+    return response;
+};
+
 export const listUserService = async (filter = {}, limit, skip, currentUser) => {
     const response = {
         statusCode: 200,

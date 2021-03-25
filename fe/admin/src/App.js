@@ -8,6 +8,7 @@ import Term from './pages/Term';
 import FacultyDetail from './pages/Faculty/FacultyDetail';
 import TermDetail from './pages/Term/TermDetail';
 import User from './pages/User';
+import UserDetail from './pages/User/UserDetail';
 
 const App = () => {
     return (
@@ -18,7 +19,8 @@ const App = () => {
             <PrivateRoute path="/faculty/detail/:id" exact component={FacultyDetail} />
             <PrivateRoute path="/term" exact component={Term} />
             <PrivateRoute path="/term/detail/:id" exact component={TermDetail} />
-            <PrivateRoute path="/user" component={User} />
+            <PrivateRoute path="/user" exact component={User} />
+            <PrivateRoute path="/user/detail/:id" exact component={UserDetail} />
         </Router>
     );
 };

@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactPaginate from 'react-paginate';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Container, Form, Modal, Table, Row, Col } from 'react-bootstrap';
-import { deleteFacultyAction, getListFaculty } from '../../actions/faculty.action';
+
 import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
+
 import { formatDate } from '../../utils';
-import { LinkContainer } from 'react-router-bootstrap';
-import { createUserAction, getUserListAction } from '../../actions/user.action';
+
+import { getListFaculty } from '../../actions/faculty.action';
+import {
+    createUserAction,
+    getUserListAction,
+    deleteUserAction,
+} from '../../actions/user.action';
 
 
 const User = () => {
@@ -24,11 +32,16 @@ const User = () => {
     const [createMessage, setCreateMessage] = useState('');
     const [showCreateModal, setCrateShow] = useState(false);
 
+    const [limit, setLimit] = useState(10);
+    const [skip, setSkip] = useState(0);
+    const [total, setTotal] = useState(0);
+
+
     const dispatch = useDispatch();
     const { loading: loadingListFaculty, error: errorList, faculties } = useSelector(({ listFaculty }) => listFaculty);
     const { loading: loadingUserList, users } = useSelector(({ userList }) => userList);
     const { loading: loadingCreate, error: errorCreate } = useSelector(({ userCreate }) => userCreate);
-    const { loading: loadingDelete, error: errorDelete } = useSelector(({ deleteFaculty }) => deleteFaculty);
+    const { loading: loadingDelete, error: errorDelete } = useSelector(({ userDelete }) => userDelete);
 
     useEffect(() => {
         if (!loadingCreate && !errorCreate) {
@@ -37,20 +50,31 @@ const User = () => {
                 resetField();
             }, 1000);
         }
-
     }, [loadingCreate, errorCreate, loadingDelete]);
 
     useEffect(() => {
-        if (loadingUserList) {
-            dispatch(getUserListAction());
-        }
-    }, [dispatch, loadingUserList]);
+           dispatch(getUserListAction({
+               limit,
+               skip,
+               isDeleted: false,
+           }));
+    }, [limit, skip, loadingCreate, loadingDelete]);
 
     useEffect(() => {
         if (!loadingListFaculty) {
             setFaculty(faculties[0]?._id);
         }
     }, [loadingListFaculty, faculties]);
+
+    useEffect(() => {
+        setTotal(users?.total);
+    }, [users]);
+
+    const handlePageChange = (page) => {
+        let selected = page.selected;
+        let skip = Math.ceil(selected * limit);
+        setSkip(skip);
+    };
 
     const resetField = () => {
         setEmail('');
@@ -98,20 +122,25 @@ const User = () => {
     };
 
     const onDeleteHandler = (facultyId) => {
-        dispatch(deleteFacultyAction(facultyId));
+        dispatch(deleteUserAction(facultyId));
     };
 
     return (
         <Container>
             <h1>List User</h1>
-            <Button
-                type="submit"
-                variant="success"
-                style={{ display: 'flex', marginLeft: 'auto' }}
-                onClick={openCreateModal}
-            >
-                New User
-            </Button>
+            {loadingUserList && <Loader />}
+
+            <div className="d-flex justify-content-between align-items-center">
+                <h2 className="m-0">Total user(s): {total}</h2>
+                <Button
+                    type="submit"
+                    variant="success"
+                    style={{ display: 'flex', marginLeft: 'auto' }}
+                    onClick={openCreateModal}
+                >
+                    New User
+                </Button>
+            </div>
 
             <Modal show={showCreateModal} onHide={resetField}>
                 <Form onSubmit={createUserHandler}>
@@ -181,7 +210,7 @@ const User = () => {
                             </Col>
                         </Row>
 
-                        <Form.Group controlId="status">
+                        <Form.Group controlId="role">
                             <Form.Label>Role <span style={{ color: 'red' }}>*</span></Form.Label>
                             <Form.Control as="select" value={role} onChange={(e) => setRole(e.target.value)}>
                                 <option key="admin" value='admin'>Admin</option>
@@ -251,36 +280,34 @@ const User = () => {
             <Table striped hover responsive>
                 <thead>
                     <tr>
-                        <th>No.</th>
+                        <th>User-Id</th>
                         <th>Email</th>
                         <th>Name</th>
-                        <th>Created By</th>
+                        <th>Phone</th>
+                        <th>Role</th>
                         <th>Created At</th>
-                        <th>Status</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {users && users.map((user, index) => (
+                    {users?.data && users.data.map((user) => (
                         <tr key={user._id}>
-                            <td>{index + 1}</td>
+                            <td>{user._id}</td>
                             <td>{user.email}</td>
                             <td>{user.profile.firstName} {user.profile.lastName}</td>
-                            <td>{faculty.createdBy.profile.firstName} {faculty.createdBy.profile.lastName}</td>
-                            <td>{formatDate(faculty.createdAt)}</td>
-                            <td style={{ fontSize: '20px' }}>
-                                {faculty.isActive ? <i className="fas fa-check" style={{ color: 'green' }}></i> : <i className="fas fa-times" style={{ color: 'red' }}></i>}
-                            </td>
+                            <td>{user.profile.phone}</td>
+                            <td>{user.profile.role}</td>
+                            <td>{formatDate(user.createdAt)}</td>
                             <td>
-                                <LinkContainer to={`/faculty/detail/${faculty._id}`}>
+                                <LinkContainer to={`/user/detail/${user._id}`}>
                                     <Button type="submit" variant="primary" className="btn-sm">
                                         <i className="fas fa-edit"></i>
                                     </Button>
                                 </LinkContainer>
                             </td>
                             <td>
-                                <Button type="submit" variant="primary" className="btn-sm" onClick={() => onDeleteHandler(faculty._id)}>
+                                <Button type="submit" variant="primary" className="btn-sm" onClick={() => onDeleteHandler(user._id)}>
                                     <i className="fas fa-trash"></i>
                                 </Button>
                             </td>
@@ -288,6 +315,36 @@ const User = () => {
                     ))}
                 </tbody>
             </Table>
+
+            <div className="d-flex justify-content-between align-items-end">
+                <Form.Group controlId="limit" style={{maxWidth: '100px'}}>
+                    <Form.Control as="select" value={limit} onChange={(e) => setLimit(e.target.value)}>
+                        <option key="10" value={10}>10</option>
+                        <option key="20" value={20}>20</option>
+                    </Form.Control>
+                </Form.Group>
+
+                <ReactPaginate
+                    previousLabel={'<'}
+                    nextLabel={'>'}
+                    breakLabel={'...'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    pageCount={Math.ceil(total / limit)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={2}
+                    onPageChange={handlePageChange}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'page-item'}
+                    activeClassName={'page-item active'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    pageClassNam={'page-item'}
+                    pageLinkClassName={'page-link'}
+                />
+            </div>
         </Container>
     );
 };

@@ -1,4 +1,5 @@
 import {
+    getUserService,
     loginAuthentication,
     listUserService,
     createUserService,
@@ -13,6 +14,12 @@ export const login = async (req, res) => {
         email: req.body.email,
         password: req.body.password
     });
+
+    return res.status(statusCode).send({ statusCode, message, data });
+};
+
+export const getUser = async (req, res) => {
+    const { statusCode, message, data } = await getUserService(req.params.id);
 
     return res.status(statusCode).send({ statusCode, message, data });
 };

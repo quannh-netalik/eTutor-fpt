@@ -1,7 +1,7 @@
 export const API_CONFIG = {
-    END_POINT: 'http://localhost:5000/',
+    END_POINT: process.env.REACT_APP_END_POINT,
     // END_POINT: 'http://52.221.246.79:5000/',
-    PREFIX: 'api',
+    PREFIX: process.env.REACT_APP_PREFIX,
 };
 
 export const AWS_END_POINT = 'https://s3-ap-southeast-1.amazonaws.com/';

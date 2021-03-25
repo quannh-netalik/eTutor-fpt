@@ -7,7 +7,9 @@
         "localStorage": true,
         "qs": true,
         "fetch": true,
-        "document": true
+        "document": true,
+        "FileReader": true,
+        "FormData": true
     },
     "extends": [
         "eslint:recommended",

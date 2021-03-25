@@ -10,6 +10,7 @@ const router = express.Router();
 export default (prefix) => {
     prefix.use('/users', verifyToken, router);
 
+    router.get('/:id', userController.getUser);
     router.get('/', userController.listUser);
     router.post('/', userValidator.createUser, validateRequest, userController.createUser);
     router.put('/:id', userController.updateUser);
