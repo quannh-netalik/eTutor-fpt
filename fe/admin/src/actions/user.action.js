@@ -9,6 +9,9 @@ import {
     USER_LIST_REQUEST,
     USER_LIST_SUCCESS,
     USER_LIST_FAIL,
+    USER_CREATE_REQUEST,
+    USER_CREATE_SUCCESS,
+    USER_CREATE_FAIL,
 } from '../constants/user.constant';
 import { getToken } from '../utils';
 
@@ -59,7 +62,6 @@ export const getUserListAction = (filter) => async (dispatch) => {
         const token = getToken();
         const query = qs.stringify(filter);
         let endpoint = `${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users`;
-        console.log(endpoint);
         if (query) {
             endpoint += `?${query}`;
         }
@@ -81,3 +83,27 @@ export const getUserListAction = (filter) => async (dispatch) => {
         });
     }
 };
+
+export const createUserAction = (body) => async (dispatch) => {
+    try {
+        dispatch({ type: USER_CREATE_REQUEST });
+        const token = getToken();
+        const { data: { data } } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users`, body, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+
+        dispatch({
+            type: USER_CREATE_SUCCESS,
+            payload: data.user
+        });
+    } catch (error) {
+        dispatch({
+            type: USER_CREATE_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
+    }
+};
+

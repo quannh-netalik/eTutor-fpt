@@ -6,6 +6,9 @@ import {
     USER_LIST_REQUEST,
     USER_LIST_SUCCESS,
     USER_LIST_FAIL,
+    USER_CREATE_REQUEST,
+    USER_CREATE_SUCCESS,
+    USER_CREATE_FAIL,
 } from '../constants/user.constant';
 
 const defaultLoginState = {};
@@ -57,7 +60,31 @@ const userListReducer = (state = { users: [] }, action) => {
     }
 };
 
+const userCreateReducer = (state = { users: [] }, action) => {
+    switch (action.type) {
+        case USER_CREATE_REQUEST:
+            return {
+                loading: true
+            };
+        case USER_CREATE_SUCCESS: {
+            return {
+                loading: false,
+                users: action.payload
+            };
+        }
+        case USER_CREATE_FAIL: {
+            return {
+                loading: false,
+                error: action.payload
+            };
+        }
+        default:
+            return state;
+    }
+};
+
 export default {
     userLogin: userLoginReducer,
     userList: userListReducer,
+    userCreate: userCreateReducer,
 };

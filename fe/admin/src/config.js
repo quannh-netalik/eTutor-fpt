@@ -1,6 +1,6 @@
 export const API_CONFIG = {
-    // END_POINT: 'http://localhost:5000/',
-    END_POINT: 'http://52.221.246.79:5000/',
+    END_POINT: 'http://localhost:5000/',
+    // END_POINT: 'http://52.221.246.79:5000/',
     PREFIX: 'api',
 };
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import { API_CONFIG } from '../config';
 import {
     FACULTY_DETAIL_REQUEST,
@@ -41,11 +42,17 @@ export const getFaculty = (id) => async (dispatch) => {
     }
 };
 
-export const getListFaculty = () => async (dispatch) => {
+export const getListFaculty = (filter) => async (dispatch) => {
     try {
         dispatch({ type: FACULTY_LIST_REQUEST });
         const token = getToken();
-        const { data: { data } } = await axios.get(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/faculty`, {
+
+        let endpoint = `${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/faculty`;
+        const query = qs.stringify(filter);
+        if (query) {
+            endpoint += `?${query}`;
+        }
+        const { data: { data } } = await axios.get(endpoint, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
