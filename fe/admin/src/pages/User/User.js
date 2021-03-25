@@ -62,12 +62,12 @@ const User = () => {
 
     useEffect(() => {
         if (!loadingListFaculty) {
-            setFaculty(faculties[0]?._id);
+            setFaculty(faculties[0]?._id || '');
         }
     }, [loadingListFaculty, faculties]);
 
     useEffect(() => {
-        setTotal(users?.total);
+        setTotal(users?.total || 0);
     }, [users]);
 
     const handlePageChange = (page) => {

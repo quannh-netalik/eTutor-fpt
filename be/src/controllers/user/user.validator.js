@@ -28,6 +28,14 @@ export const sanitizeUpdateData = (data) => {
         result['profile.phone'] = data.profile.phone;
     }
 
+    if (data.profile.role) {
+        result['profile.role'] = data.profile.role;
+    }
+
+    if (data.profile.faculty) {
+        result['profile.faculty'] = data.profile.faculty;
+    }
+
     return result;
 };
 

@@ -54,13 +54,13 @@ const UserDetail = ({ match, location }) => {
         dispatch(getListFaculty({
             isActive: true,
         }));
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         if (!loadingListFaculty && role !== 'admin') {
-            setFaculty(faculties[0]?._id);
+            setFaculty(faculties[0]?._id || '');
         }
-    }, [loadingListFaculty, faculties]);
+    }, [loadingListFaculty, faculties, role]);
 
     const handleChangeAvatar = (e) => {
         const reader = new FileReader();
@@ -70,8 +70,6 @@ const UserDetail = ({ match, location }) => {
         };
 
         setAvatar(e.target.files[0]);
-        console.log(avatar);
-        console.log(e.target.files[0]);
     };
 
     const onUpdateHandler = (e) => {
@@ -137,7 +135,6 @@ const UserDetail = ({ match, location }) => {
                                                     value={isChangePassword}
                                                     onChange={() => setIsChangePassword(!isChangePassword)}
                                                 />
-                                                {console.log(isChangePassword)}
                                                 <Form.Label>Change password?</Form.Label>
                                             </div>
                                         </Form.Group>
@@ -159,7 +156,7 @@ const UserDetail = ({ match, location }) => {
                                                     <Form.Control
                                                         type="password"
                                                         placeholder="Enter confirm password"
-                                                        value={confirmPassword || ''}
+                                                        value={confirmPassword}
                                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                                     ></Form.Control>
                                                 </Form.Group>
