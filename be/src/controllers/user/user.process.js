@@ -5,6 +5,7 @@ import { accessToken } from '../../utils/index.js';
 import { sanitizeUpdateData, sanitizeUserData } from './user.validator.js';
 import { uploadAWS } from '../../common/aws.js';
 import { AWS_FOLDER, E_TUTOR_BUCKET } from '../../common/enum.js';
+import { mailer } from '../../common/mailer.js';
 
 export const loginAuthentication = async ({ email, password }) => {
     const response = {
@@ -119,6 +120,7 @@ export const createUserService = async (data) => {
             },
         };
 
+        let faculty;
         // if is not admin, require faculty
         if (data.profile.role !== 'admin') {
             if (!data.profile.faculty) {
@@ -129,7 +131,7 @@ export const createUserService = async (data) => {
                 };
             }
 
-            const faculty = await Faculty.findById(data.profile.faculty);
+            faculty = await Faculty.findById(data.profile.faculty);
             if (!faculty) {
                 return {
                     statusCode: 404,
@@ -141,6 +143,40 @@ export const createUserService = async (data) => {
         }
 
         const newUser = new User(createdData);
+
+        await mailer({
+            email: data.email,
+            subject: 'Invitation to the e-Tutor system',
+            content: `
+                <h1>Hello ${data.profile.firstName} ${data.profile.lastName},</h1>
+                <div>Welcome to the e-Tutor system, this is your information to login the system</div>
+                <table style="border: 1px solid black;">
+                    <tr style="border: 1px solid black;">
+                        <td style="border: 1px solid black;">Email</td>
+                        <td style="border: 1px solid black;">Password</td>
+                        <td style="border: 1px solid black;">Name</td>
+                        <td style="border: 1px solid black;">Role</td>
+                        <td style="border: 1px solid black;">Address</td>
+                        <td style="border: 1px solid black;">City</td>
+                        <td style="border: 1px solid black;">Phone</td>
+                        ${data.profile.role !== 'admin' ? '<td style="border: 1px solid black;">Faculty</td>' : ''}
+                    </tr>
+                    <tr style="border: 1px solid black;">
+                        <td style="border: 1px solid black;">${data.email}</td>
+                        <td style="border: 1px solid black;">${data.password}</td>
+                        <td style="border: 1px solid black;">${data.profile.firstName} ${data.profile.lastName}</td>
+                        <td style="border: 1px solid black;">${data.profile.role}</td>
+                        <td style="border: 1px solid black;">${data.profile.address}</td>
+                        <td style="border: 1px solid black;">${data.profile.city}</td>
+                        <td style="border: 1px solid black;">${data.profile.phone}</td>
+                        ${data.profile.role !== 'admin' ? `<td style="border: 1px solid black;">${faculty.name}</td>` : ''}
+                    </tr>
+                </table>
+                <div>Login via: ${process.env.FE_END_POINT}</div>
+                <div>Please do not show/share your email account to anyone for security!</div>
+                <div>Thanks for your cooperation!</div>
+            `,
+        });
 
         response.data = await newUser.save();
     } catch (err) {
