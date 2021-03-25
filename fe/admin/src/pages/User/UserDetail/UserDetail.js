@@ -12,21 +12,27 @@ import { AWS_FOLDER } from '../../../config';
 import { LinkContainer } from 'react-router-bootstrap';
 const UserDetail = ({ match, location }) => {
     const query = new URLSearchParams(location.search);
+    const isMyProfile = query.get('profile');
 
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [role, setRole] = useState();
-    const [faculty, setFaculty] = useState();
-    const [address, setAddress] = useState();
-    const [city, setCity] = useState();
-    const [phone, setPhone] = useState();
-    const [avatar, setAvatar] = useState();
-    const [avatarSrc, setAvatarSrc] = useState();
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isChangePassword, setIsChangePassword] = useState(false);
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [role, setRole] = useState('');
+    const [faculty, setFaculty] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [phone, setPhone] = useState('');
+    const [avatar, setAvatar] = useState('');
+    const [avatarSrc, setAvatarSrc] = useState('');
 
     const dispatch = useDispatch();
 
     const { loading: loadingListFaculty, faculties } = useSelector(({ listFaculty }) => listFaculty);
     const { loading: loadingDetail, error: errorDetail, user } = useSelector(({ userDetail }) => userDetail);
+    const { loading: loadingUpdate, error: errorUpdate, user: userUpdate } = useSelector(({ userUpdate }) => userUpdate);
 
     useEffect(() => {
         if (!user?.email || user?._id !== match.params.id) {
@@ -90,13 +96,18 @@ const UserDetail = ({ match, location }) => {
                 file: avatar,
             }));
         }
+
+        setPassword('');
+        setConfirmPassword('');
     };
 
     return (
         <FormContainer md={12}>
-            <h1>{query.get('profile') ? 'My profile' : 'User Detail'}</h1>
-            {loadingDetail && <Loader />}
+            <h1>{isMyProfile ? 'My profile' : 'User Detail'}</h1>
+            {(loadingDetail || loadingUpdate) && <Loader />}
             {errorDetail && <Message variant="danger">{errorDetail}</Message>}
+            {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+            {userUpdate?.message && <Message variant="success">{userUpdate.message}</Message>}
             <Form onSubmit={onUpdateHandler}>
                 <Row>
                     <Col>
@@ -111,6 +122,47 @@ const UserDetail = ({ match, location }) => {
                                         disabled={true}
                                     ></Form.Control>
                                 </Form.Group>
+
+                                {isMyProfile && (
+                                    <>
+                                        <Form.Group controlId="isChangePassword">
+                                            <div className="d-flex">
+                                                <Form.Check
+                                                    type="checkbox"
+                                                    value={isChangePassword}
+                                                    onChange={() => setIsChangePassword(!isChangePassword)}
+                                                />
+                                                {console.log(isChangePassword)}
+                                                <Form.Label>Change password?</Form.Label>
+                                            </div>
+                                        </Form.Group>
+                                        <br/>
+
+                                        {isChangePassword && (
+                                            <>
+                                                <Form.Group controlId="password">
+                                                    <Form.Label>Password</Form.Label>
+                                                    <Form.Control
+                                                        type="password"
+                                                        placeholder="Enter password"
+                                                        value={password}
+                                                        onChange={(e) => setPassword(e.target.value)}
+                                                    ></Form.Control>
+                                                </Form.Group>
+
+                                                <Form.Group controlId="confirmPassword">
+                                                    <Form.Label>Confirm password</Form.Label>
+                                                    <Form.Control
+                                                        type="password"
+                                                        placeholder="Enter confirm password"
+                                                        value={confirmPassword || ''}
+                                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                                    ></Form.Control>
+                                                </Form.Group>
+                                            </>
+                                        )}
+                                    </>
+                                )}
 
                                 <Row>
                                     <Col>

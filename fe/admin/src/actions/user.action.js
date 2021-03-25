@@ -183,7 +183,7 @@ export const uploadUserAvatarAction = ({ id, file }) => async (dispatch) => {
         const payload = new FormData();
         payload.append('avatar', uploadAvatar);
 
-        const { data: { data } } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}/avatar`, payload, {
+        const { data } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}/avatar`, payload, {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`

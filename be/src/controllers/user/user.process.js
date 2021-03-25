@@ -169,7 +169,12 @@ export const updateUserService = async ({ userId, data }) => {
             };
         }
 
-        response.data = user;
+        if (data.password) {
+            user.password = data.password;
+            await user.save();
+        }
+
+        response.data = sanitizeUserData(user);
     } catch (err) {
         response.statusCode = 500;
         response.message = err.message;
