@@ -38,7 +38,6 @@ const Header = () => {
                                         <Nav.Link>User <i className="fas fa-users"></i></Nav.Link>
                                     </LinkContainer>
                                     <NavDropdown title={`Mr. ${user.profile.firstName}`} id="username">
-                                    {console.log(user)}
                                         <LinkContainer to={`/user/detail/${user._id}?profile=true`}>
                                             <NavDropdown.Item>
                                                 Profile <i style={{ marginLeft: '25px' }} className="fas fa-user-alt"></i>

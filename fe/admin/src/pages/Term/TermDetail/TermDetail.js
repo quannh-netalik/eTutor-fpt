@@ -18,7 +18,7 @@ const FacultyDetail = ({ history, match }) => {
     const [message, setMessage] = useState('');
 
     const { loading, error, term } = useSelector(({ termDetail }) => termDetail);
-    console.log(term);
+
     const { loading: updateLoading, error: updateError } = useSelector(({ updateFaculty }) => updateFaculty);
 
     const [name, setName] = useState('');
@@ -26,7 +26,7 @@ const FacultyDetail = ({ history, match }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('');
-    console.log('staet', endDate);
+
     useEffect(() => {
         // if did not exist in redux or the request id is different with the one in redux
         if (!term?.name || term._id !== match.params.id) {
