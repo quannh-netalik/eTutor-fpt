@@ -10,6 +10,7 @@ import { Button, Col, Form, Image, Row } from 'react-bootstrap';
 import { getListFaculty } from '../../../actions/faculty.action';
 import { AWS_FOLDER } from '../../../config';
 import { LinkContainer } from 'react-router-bootstrap';
+import { USER_UPDATE_RESET } from '../../../constants/user.constant';
 const UserDetail = ({ match, location }) => {
     const query = new URLSearchParams(location.search);
     const isMyProfile = query.get('profile');
@@ -99,6 +100,10 @@ const UserDetail = ({ match, location }) => {
 
         setPassword('');
         setConfirmPassword('');
+
+        setTimeout(() => {
+            dispatch({ type: USER_UPDATE_RESET });
+        }, 1000);
     };
 
     return (
@@ -136,7 +141,6 @@ const UserDetail = ({ match, location }) => {
                                                 <Form.Label>Change password?</Form.Label>
                                             </div>
                                         </Form.Group>
-                                        <br/>
 
                                         {isChangePassword && (
                                             <>

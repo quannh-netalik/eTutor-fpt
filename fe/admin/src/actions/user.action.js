@@ -144,8 +144,7 @@ export const updateUserAction = ({ id, body }) => async (dispatch) => {
     try {
         dispatch({ type: USER_UPDATE_REQUEST });
         const token = getToken();
-        console.log(token);
-        const { data: { data } } = await axios.put(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}`, body, {
+        const { data } = await axios.put(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}`, body, {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -154,7 +153,7 @@ export const updateUserAction = ({ id, body }) => async (dispatch) => {
 
         dispatch({
             type: USER_DETAIL_SUCCESS,
-            payload: data,
+            payload: data.data,
         });
 
         dispatch({
@@ -183,7 +182,7 @@ export const uploadUserAvatarAction = ({ id, file }) => async (dispatch) => {
         const payload = new FormData();
         payload.append('avatar', uploadAvatar);
 
-        const { data } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}/avatar`, payload, {
+        const { data: { data } } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}/avatar`, payload, {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`

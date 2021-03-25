@@ -53,11 +53,11 @@ const User = () => {
     }, [loadingCreate, errorCreate, loadingDelete]);
 
     useEffect(() => {
-           dispatch(getUserListAction({
-               limit,
-               skip,
-               isDeleted: false,
-           }));
+        dispatch(getUserListAction({
+            limit,
+            skip,
+            isDeleted: false,
+        }));
     }, [limit, skip, loadingCreate, loadingDelete]);
 
     useEffect(() => {
@@ -280,7 +280,6 @@ const User = () => {
             <Table striped hover responsive>
                 <thead>
                     <tr>
-                        <th>User-Id</th>
                         <th>Email</th>
                         <th>Name</th>
                         <th>Phone</th>
@@ -293,7 +292,6 @@ const User = () => {
                 <tbody>
                     {users?.data && users.data.map((user) => (
                         <tr key={user._id}>
-                            <td>{user._id}</td>
                             <td>{user.email}</td>
                             <td>{user.profile.firstName} {user.profile.lastName}</td>
                             <td>{user.profile.phone}</td>
@@ -317,7 +315,7 @@ const User = () => {
             </Table>
 
             <div className="d-flex justify-content-between align-items-end">
-                <Form.Group controlId="limit" style={{maxWidth: '100px'}}>
+                <Form.Group controlId="limit" style={{ maxWidth: '100px' }}>
                     <Form.Control as="select" value={limit} onChange={(e) => setLimit(e.target.value)}>
                         <option key="10" value={10}>10</option>
                         <option key="20" value={20}>20</option>
