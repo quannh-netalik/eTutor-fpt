@@ -6,7 +6,7 @@ const Dashboard = () => {
     const { user } = useSelector(({ userLogin }) => userLogin);
     return (
         <Container>
-            <h1>Welcome back, {user?.profile?.firstName} {user?.profile?.lastName}.</h1>
+            <h1>Welcome back, {user.profile.firstName} {user.profile.lastName}.</h1>
         </Container>
     );
 };

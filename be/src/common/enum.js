@@ -22,4 +22,4 @@ export const SMTP_CONFIG = {
     },
 };
 
-export const MAILER_FROM = `E-tutoring system <${process.env.SMTP_USER_NO_REPLY}>`;
+export const MAILER_FROM = `Magazine system <${process.env.SMTP_USER_NO_REPLY}>`;
