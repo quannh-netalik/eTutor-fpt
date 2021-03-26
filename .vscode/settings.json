@@ -4,6 +4,5 @@
     },
     "eslint.validate": [
         "javascript"
-    ],
-    "liveServer.settings.port": 5501
+    ]
 }
