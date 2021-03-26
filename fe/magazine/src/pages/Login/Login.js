@@ -27,7 +27,7 @@ const Login = ({ history }) => {
 
     return (
         <FormContainer>
-            <h1>Admin Login</h1>
+            <h1>Login to Magazine system</h1>
             {error && <Message variant="danger">{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={loginHandler}>

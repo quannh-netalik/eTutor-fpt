@@ -1,0 +1,6 @@
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: 25px !important;
+        padding-left: 25px !important;
+    }
+}

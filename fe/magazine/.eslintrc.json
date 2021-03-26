@@ -1,0 +1,39 @@
+{
+    "env": {
+        "node": true,
+        "es2021": true
+    },
+    "globals": {
+        "localStorage": true,
+        "qs": true,
+        "fetch": true,
+        "document": true,
+        "FileReader": true,
+        "FormData": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "semi": [
+            2,
+            "always"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "react/prop-types": "off"
+    }
+}

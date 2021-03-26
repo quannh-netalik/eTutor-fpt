@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import { renderFile } from 'ejs';
+import ejs from 'ejs';
 
 import { Faculty } from '../../models/faculty.model.js';
 import { User } from '../../models/user.model.js';
@@ -148,7 +148,7 @@ export const createUserService = async (data) => {
 
         const newUser = new User(createdData);
 
-        const body = await renderFile('src/views/new-user.template.ejs', {
+        const body = await ejs.renderFile('src/views/new-user.template.ejs', {
             first_name: data.profile.firstName,
             email: data.email,
             password: data.password,
@@ -159,7 +159,7 @@ export const createUserService = async (data) => {
             city: data.profile.city,
             phone: data.profile.phone,
             button_link: process.env.FE_END_POINT,
-            faculty: data.profile.role !== 'admin' && faculty.name 
+            faculty: data.profile.role !== 'admin' && faculty.name
         });
 
         await mailer({

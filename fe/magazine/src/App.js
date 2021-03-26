@@ -1,31 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import MainLayout from './components/layouts/MainLayout';
 import PrivateRoute from './components/PrivateRoute';
+import MainLayout from './components/layouts/MainLayout';
 import Login from './pages/Login';
-import Faculty from './pages/Faculty';
-import Term from './pages/Term';
-import FacultyDetail from './pages/Faculty/FacultyDetail';
-import TermDetail from './pages/Term/TermDetail';
-import User from './pages/User';
-import UserDetail from './pages/User/UserDetail';
-import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
 
 const App = () => {
     return (
         <Router>
             <MainLayout>
                 <Switch>
-
                     <Route path="/login" exact component={Login} />
                     <PrivateRoute path="/" exact component={Dashboard} />
-                    <PrivateRoute path="/faculty" exact component={Faculty} />
-                    <PrivateRoute path="/faculty/detail/:id" exact component={FacultyDetail} />
+                    <PrivateRoute path="/profile/:id" exact component={Profile} />
+                    {/* <PrivateRoute path="/faculty/detail/:id" exact component={FacultyDetail} />
                     <PrivateRoute path="/term" exact component={Term} />
                     <PrivateRoute path="/term/detail/:id" exact component={TermDetail} />
                     <PrivateRoute path="/user" exact component={User} />
-                    <PrivateRoute path="/user/detail/:id" exact component={UserDetail} />
+                    <PrivateRoute path="/user/detail/:id" exact component={UserDetail} />*/}
                     <Route path="*" component={NotFound} />
                 </Switch>
             </MainLayout>

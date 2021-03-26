@@ -44,7 +44,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     // only admin can edit information all
     // or the user themselves
-    if (req.user.profile.role !== 'admin' && req.user._id !== req.params.id) {
+    if (req.user.profile.role !== 'admin' && String(req.user._id) !== req.params.id) {
         return res.status(403).send({ statusCode: 403, message: 'Access denied', data: {} });
     }
 

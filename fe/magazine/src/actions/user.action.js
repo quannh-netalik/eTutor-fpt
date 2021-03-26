@@ -13,12 +13,6 @@ import {
     USER_DETAIL_REQUEST,
     USER_DETAIL_SUCCESS,
     USER_DETAIL_FAIL,
-    USER_CREATE_REQUEST,
-    USER_CREATE_SUCCESS,
-    USER_CREATE_FAIL,
-    USER_DELETE_REQUEST,
-    USER_DELETE_SUCCESS,
-    USER_DELETE_FAIL,
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
@@ -35,7 +29,7 @@ export const userLoginAction = ({ email, password }) => async (dispatch) => {
             },
         });
 
-        if (data.user.profile.role !== 'admin') {
+        if (data.user.profile.role === 'admin') {
             dispatch({
                 type: USER_LOGIN_FAIL,
                 payload: 'Role is now allowed',
@@ -117,29 +111,6 @@ export const getUserListAction = (filter) => async (dispatch) => {
     }
 };
 
-export const createUserAction = (body) => async (dispatch) => {
-    try {
-        dispatch({ type: USER_CREATE_REQUEST });
-        const token = getToken();
-        const { data: { data } } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users`, body, {
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        });
-
-        dispatch({
-            type: USER_CREATE_SUCCESS,
-            payload: data.user
-        });
-    } catch (error) {
-        dispatch({
-            type: USER_CREATE_FAIL,
-            payload: error.response?.data?.message || error.message,
-        });
-    }
-};
-
 export const updateUserAction = ({ id, body }) => async (dispatch) => {
     try {
         dispatch({ type: USER_UPDATE_REQUEST });
@@ -213,29 +184,6 @@ export const uploadUserAvatarAction = ({ id, file }) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: USER_UPDATE_FAIL,
-            payload: error.response?.data?.message || error.message,
-        });
-    }
-};
-
-export const deleteUserAction = (id) => async (dispatch) => {
-    try {
-        dispatch({ type: USER_DELETE_REQUEST });
-        const token = getToken();
-        const { data: { data } } = await axios.delete(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/users/${id}`, {
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        });
-
-        dispatch({
-            type: USER_DELETE_SUCCESS,
-            payload: data
-        });
-    } catch (error) {
-        dispatch({
-            type: USER_DELETE_FAIL,
             payload: error.response?.data?.message || error.message,
         });
     }

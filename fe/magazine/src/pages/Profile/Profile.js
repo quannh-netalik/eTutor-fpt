@@ -3,19 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, Image, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import Loader from '../../../components/common/Loader';
-import Message from '../../../components/common/Message';
-import FormContainer from '../../../components/common/FormContainer';
+import Loader from '../../components/common/Loader';
+import Message from '../../components/common/Message';
+import FormContainer from '../../components/common/FormContainer';
 
-import { USER_UPDATE_RESET } from '../../../constants/user.constant';
-import { getUserDetailAction, updateUserAction, uploadUserAvatarAction } from '../../../actions/user.action';
-import { getListFaculty } from '../../../actions/faculty.action';
-import { AWS_FOLDER } from '../../../config';
+import { USER_UPDATE_RESET } from '../../constants/user.constant';
+import { getUserDetailAction, updateUserAction, uploadUserAvatarAction } from '../../actions/user.action';
+import { AWS_FOLDER } from '../../config';
 
-const UserDetail = ({ match, location }) => {
-    const query = new URLSearchParams(location.search);
-    const isMyProfile = query.get('profile');
-
+const Profile = ({ match }) => {
     const [message, setMessage] = useState('');
 
     const [password, setPassword] = useState('');
@@ -34,8 +30,7 @@ const UserDetail = ({ match, location }) => {
 
     const dispatch = useDispatch();
 
-    const { loading: loadingListFaculty, faculties } = useSelector(({ listFaculty }) => listFaculty);
-    const { loading: loadingDetail, error: errorDetail, user } = useSelector(({ userDetail }) => userDetail);
+    const { user } = useSelector(({ userLogin }) => userLogin);
     const { loading: loadingUpdate, error: errorUpdate, user: userUpdate } = useSelector(({ userUpdate }) => userUpdate);
 
     useEffect(() => {
@@ -52,18 +47,6 @@ const UserDetail = ({ match, location }) => {
             setAvatarSrc(`${AWS_FOLDER.IMAGE}${user?.profile?.avatar}`);
         }
     }, [dispatch, user, match]);
-
-    useEffect(() => {
-        dispatch(getListFaculty({
-            isActive: true,
-        }));
-    }, []);
-
-    useEffect(() => {
-        if (!loadingListFaculty && role !== 'admin') {
-            setFaculty(faculties[0]?._id || '');
-        }
-    }, [loadingListFaculty, faculties, role]);
 
     const handleChangeAvatar = (e) => {
         const reader = new FileReader();
@@ -116,10 +99,9 @@ const UserDetail = ({ match, location }) => {
 
     return (
         <FormContainer md={12}>
-            <h1>{isMyProfile ? 'My profile' : 'User Detail'}</h1>
-            {(loadingDetail || loadingUpdate) && <Loader />}
+            <h1>My profile</h1>
+            {loadingUpdate && <Loader />}
             {message && <Message variant="danger">{message}</Message>}
-            {errorDetail && <Message variant="danger">{errorDetail}</Message>}
             {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
             {userUpdate?.message && <Message variant="success">{userUpdate.message}</Message>}
             <Form onSubmit={onUpdateHandler}>
@@ -137,42 +119,38 @@ const UserDetail = ({ match, location }) => {
                                     ></Form.Control>
                                 </Form.Group>
 
-                                {isMyProfile && (
+                                <Form.Group controlId="isChangePassword">
+                                    <div className="d-flex">
+                                        <Form.Check
+                                            type="checkbox"
+                                            value={isChangePassword}
+                                            onChange={() => setIsChangePassword(!isChangePassword)}
+                                        />
+                                        <Form.Label>Change password?</Form.Label>
+                                    </div>
+                                </Form.Group>
+
+                                {isChangePassword && (
                                     <>
-                                        <Form.Group controlId="isChangePassword">
-                                            <div className="d-flex">
-                                                <Form.Check
-                                                    type="checkbox"
-                                                    value={isChangePassword}
-                                                    onChange={() => setIsChangePassword(!isChangePassword)}
-                                                />
-                                                <Form.Label>Change password?</Form.Label>
-                                            </div>
+                                        <Form.Group controlId="password">
+                                            <Form.Label>Password</Form.Label>
+                                            <Form.Control
+                                                type="password"
+                                                placeholder="Enter password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                            ></Form.Control>
                                         </Form.Group>
 
-                                        {isChangePassword && (
-                                            <>
-                                                <Form.Group controlId="password">
-                                                    <Form.Label>Password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="Enter password"
-                                                        value={password}
-                                                        onChange={(e) => setPassword(e.target.value)}
-                                                    ></Form.Control>
-                                                </Form.Group>
-
-                                                <Form.Group controlId="confirmPassword">
-                                                    <Form.Label>Confirm password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="Enter confirm password"
-                                                        value={confirmPassword}
-                                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                                    ></Form.Control>
-                                                </Form.Group>
-                                            </>
-                                        )}
+                                        <Form.Group controlId="confirmPassword">
+                                            <Form.Label>Confirm password</Form.Label>
+                                            <Form.Control
+                                                type="password"
+                                                placeholder="Enter confirm password"
+                                                value={confirmPassword}
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                            ></Form.Control>
+                                        </Form.Group>
                                     </>
                                 )}
 
@@ -205,25 +183,21 @@ const UserDetail = ({ match, location }) => {
 
                                 <Form.Group controlId="role">
                                     <Form.Label>Role <span style={{ color: 'red' }}>*</span></Form.Label>
-                                    <Form.Control as="select" value={role} onChange={(e) => setRole(e.target.value)}>
-                                        <option key="admin" value='admin'>Admin</option>
-                                        <option key="manager" value='manager'>Manager</option>
-                                        <option key="coordinator" value='coordinator'>Coordinator</option>
-                                        <option key="student" value='student'>Student</option>
-                                        <option key="guest" value='guest'>Guest</option>
-                                    </Form.Control>
+                                    <Form.Control
+                                        type="text"
+                                        value={role}
+                                        disabled={true}
+                                    ></Form.Control>
                                 </Form.Group>
 
-                                {role !== 'admin' && (
-                                    <Form.Group controlId="faculty">
-                                        <Form.Label>Faculty <span style={{ color: 'red' }}>*</span></Form.Label>
-                                        <Form.Control as="select" value={faculty} onChange={(e) => setFaculty(e.target.value)}>
-                                            {faculties && faculties.map(f => (
-                                                <option key={f.name} value={f._id}>{f.name}</option>
-                                            ))}
-                                        </Form.Control>
-                                    </Form.Group>
-                                )}
+                                <Form.Group controlId="faculty">
+                                    <Form.Label>Faculty <span style={{ color: 'red' }}>*</span></Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={faculty}
+                                        disabled={true}
+                                    ></Form.Control>
+                                </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="address">
@@ -285,4 +259,4 @@ const UserDetail = ({ match, location }) => {
     );
 };
 
-export default UserDetail;
+export default Profile;
