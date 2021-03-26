@@ -36,7 +36,7 @@ export const getBlogService = async (blogId) => {
         const comments = await Comment.find({ blog: blog._id })
             .sort({ updatedAt: -1 })
             .populate({ path: 'user', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .select('content user')
+            .select('user')
             .limit(10)
             .lean();
 
@@ -60,7 +60,10 @@ export const listBlogService = async (filter = {}, limit, skip) => {
     };
 
     try {
-        const total = await Blog.countDocuments(filter);
+        const total = await Blog.countDocuments({
+            ...filter,
+            isDeleted: false,
+        });
         const blogs = await Blog.find({
             ...filter,
             isDeleted: false,
@@ -77,7 +80,7 @@ export const listBlogService = async (filter = {}, limit, skip) => {
             const comments = await Comment.find({ blog: blog._id })
                 .sort({ updatedAt: -1 })
                 .populate({ path: 'user', select: 'email profile.firstName profile.lastName profile.avatar' })
-                .select('content user')
+                .select('user')
                 .limit(5)
                 .lean();
 
@@ -151,6 +154,7 @@ export const createBlogService = async ({ data, user: currentUser }) => {
 
         const blog = await Blog.create({
             title: data.title,
+            bgImage: 'default_blog_bgimage.jpg',
             content: data.content,
             createdBy: currentUser._id,
             faculty: data.faculty,

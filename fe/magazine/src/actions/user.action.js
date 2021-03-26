@@ -95,7 +95,7 @@ export const getUserListAction = (filter) => async (dispatch) => {
         const { data: { data } } = await axios.get(endpoint, {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
             },
         });
 
