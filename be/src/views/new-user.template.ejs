@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-size: 14px;
+            text-align: justify;
+            line-height: 1.43;
+            letter-spacing: normal;
+            font-family: Muli;
+        }
+
+        .button {
+            border-radius: 26px;
+        }
+
+        .button a {
+            padding: 17px 15px;
+            border: 1px solid #57e7d6;
+            border-radius: 26px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        table tr td p {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <table align="center" class=MsoTableGrid border=0 width="500" cellspacing="0" cellpadding="0"
+        style='width: 450.0pt;border-collapse:collapse;border:none'>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <p>Hi <strong>
+                                    <%=first_name%>,
+                                </strong></p>
+                            <p>Welcome to Magazine System. You are invited to Magazine System, your account information detail below.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p><br></p>
+    <table align="center" class=MsoTableGrid border=0 width="500" cellspacing="0" cellpadding="0"
+        style='width: 450.0pt;border-collapse:collapse;border:none'>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <strong>Username</strong>: <%=email%>
+                            <br>
+                            <strong>Password</strong>: <%=password%>
+                            <br>
+                            <strong>First Name</strong>: <%=firstName%>
+                            <br>
+                            <strong>Last Name</strong>: <%=lastName%>
+                            <br>
+                            <strong>Role</strong>: <%=role%>
+                            <% if (address) { %>
+                                <br>
+                                <strong>Address</strong>: <%=address%>
+                            <% } %>
+                            <% if (city) { %>
+                                <br>
+                                <strong>City</strong>: <%=city%>
+                            <% } %>
+                            <% if (phone) { %>
+                                <br>
+                            <strong>Phone</strong>: <%=phone%>
+                            <% } %>
+                            <% if (faculty) { %>
+                                <br>
+                            <strong>Faculty</strong>: <%=faculty%>
+                            <% } %>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p><br></p>
+    <table align="center" class=MsoTableGrid border=0 width="500" cellspacing="0" cellpadding="0"
+        style='width: 450.0pt;border-collapse:collapse;border:none'>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0" style="background: linear-gradient(to left, #5c96d4, #24bbce);border-radius: 20px; font-family: Muli;font-size: 14px; ;text-decoration: none;font-weight:bold;
+                text-align: center;box-shadow: 0 5px 10px 0 rgba(58, 188, 202, 0.17);">
+                    <tr>
+                        <td bgcolor="#24bbce" width="100%" style="background: linear-gradient(to left, #5c96d4, #24bbce); padding: 11px 15px; border-radius: 20px; font-family: Muli;font-size: 14px; ;text-decoration: none;font-weight:bold;
+                         width: 180px; height: 18px; text-align: center;box-shadow: 0 5px 10px 0 rgba(58, 188, 202, 0.17);">
+                            <a href="<%=button_link%>" target="_blank"
+                                style="text-decoration:none; color: white;;background-image: linear-gradient(to left, #5c96d4, #24bbce)">
+                                Login to Magazine Portal
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p><br></p>
+    <table align="center" class=MsoTableGrid border=0 width="500" cellspacing="0" cellpadding="0"
+        style='width: 450.0pt;border-collapse:collapse;border:none'>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <p>Please do not show/share your email account to anyone for security!</p>
+                            <p>Thanks for your cooperation!</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p><br></p>
+    <table align="center" class=MsoTableGrid border=0 width="500" cellspacing="0" cellpadding="0"
+        style='width: 450.0pt;border-collapse:collapse;border:none'>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <p>Sincerely,</p>
+                            <p>Magazine Team</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
