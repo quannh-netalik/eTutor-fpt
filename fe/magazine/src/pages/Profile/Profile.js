@@ -233,8 +233,8 @@ const Profile = ({ match }) => {
                         </Row>
 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <LinkContainer to="/user">
-                                <Button type="submit" variant="light">Back</Button>
+                            <LinkContainer to="/">
+                                <Button type="submit" variant="light">Back To Dashboard</Button>
                             </LinkContainer>
 
                             <Button type="submit" variant="dark">Update</Button>
