@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import BlogDetail from './pages/BlogDetail';
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                     <Route path="/login" exact component={Login} />
                     <PrivateRoute path="/" exact component={Dashboard} />
                     <PrivateRoute path="/profile/:id" exact component={Profile} />
+                    <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
                     {/* <PrivateRoute path="/faculty/detail/:id" exact component={FacultyDetail} />
                     <PrivateRoute path="/term" exact component={Term} />
                     <PrivateRoute path="/term/detail/:id" exact component={TermDetail} />

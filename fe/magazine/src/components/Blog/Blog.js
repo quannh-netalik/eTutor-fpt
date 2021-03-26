@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import { AWS_FOLDER } from '../../config';
 import { formatDate } from '../../utils';
@@ -12,11 +13,11 @@ const Blog = ({ blog }) => {
     return (
         <Card className="my-3 p-3 rounded">
             <Link to={`/blog/${blog._id}`}>
-                <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" />
+                <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" rounded style={{ width: '300px', height: '130px' }} />
             </Link>
 
             <Card.Body>
-                <Link to={`/product/${blog._id}`}>
+                <Link to={`/blog/${blog._id}`}>
                     <Card.Title as="div">
                         <strong>Title: <b>{blog.title}</b></strong>
                     </Card.Title>
@@ -40,7 +41,13 @@ const Blog = ({ blog }) => {
 
                 </Card.Text>
 
-                <Card.Text as="h3">{blog.price}</Card.Text>
+                <Card.Text as="h3">
+                    <LinkContainer to={`/blog/${blog._id}`}>
+                        <div className="d-flex my-3 justify-content-end">
+                            <Button className="btn-sm"><i className="fa fa-star mr-1"></i>Read more</Button>
+                        </div>
+                    </LinkContainer>
+                </Card.Text>
             </Card.Body>
         </Card>
     );

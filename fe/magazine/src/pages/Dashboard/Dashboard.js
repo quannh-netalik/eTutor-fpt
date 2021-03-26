@@ -68,8 +68,8 @@ const Dashboard = () => {
                 />
             </Row>
             <Row>
-                {blogs?.data && blogs.data.map((blog) => (
-                    <Col key={blog._id} sm={12} md={6} lg={4} xl={4}>
+                {blogs?.data && blogs.data.map((blog, index) => (
+                    <Col key={`${blog._id}-${index}`} sm={12} md={6} lg={4} xl={4}>
                         <Blog blog={blog} />
                     </Col>
                 ))}
