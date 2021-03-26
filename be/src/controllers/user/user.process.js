@@ -146,10 +146,10 @@ export const createUserService = async (data) => {
 
         await mailer({
             email: data.email,
-            subject: 'Invitation to the e-Tutor system',
+            subject: 'Invitation to the Magazine system',
             content: `
                 <h1>Hello ${data.profile.firstName} ${data.profile.lastName},</h1>
-                <div>Welcome to the e-Tutor system, this is your information to login the system</div>
+                <div>Welcome to the Magazine system, this is your information to login the system</div>
                 <table style="border: 1px solid black;">
                     <tr style="border: 1px solid black;">
                         <td style="border: 1px solid black;">Email</td>
