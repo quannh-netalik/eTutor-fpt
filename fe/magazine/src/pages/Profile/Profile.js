@@ -77,7 +77,6 @@ const Profile = ({ match }) => {
                     address,
                     city,
                     phone,
-                    faculty,
                 },
             },
         }));
@@ -194,7 +193,7 @@ const Profile = ({ match }) => {
                                     <Form.Label>Faculty <span style={{ color: 'red' }}>*</span></Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={faculty}
+                                        value={faculty?.name}
                                         disabled={true}
                                     ></Form.Control>
                                 </Form.Group>

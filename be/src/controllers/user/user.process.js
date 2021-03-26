@@ -19,7 +19,7 @@ export const loginAuthentication = async ({ email, password }) => {
     };
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate({ path: 'profile.faculty' });
         if (!user || !user.comparePassword(password)) {
             return {
                 statusCode: 401,
