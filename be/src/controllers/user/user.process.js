@@ -165,7 +165,7 @@ export const createUserService = async (data) => {
         await mailer({
             email: data.email,
             subject: 'Invitation to the Magazine system',
-            content: body
+            content: body,
         });
 
         response.data = await newUser.save();
@@ -269,7 +269,6 @@ export const uploadUserAvatar = async ({ userId, avatar }) => {
 
         response.data = await user.save();
     } catch (err) {
-        console.log(err);
         response.statusCode = 500;
         response.message = err.message;
     }
