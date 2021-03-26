@@ -1,12 +1,15 @@
 import md5 from 'md5';
+import { renderFile } from 'ejs';
+
 import { Faculty } from '../../models/faculty.model.js';
 import { User } from '../../models/user.model.js';
+
 import { accessToken } from '../../utils/index.js';
 import { sanitizeUpdateData, sanitizeUserData } from './user.validator.js';
-import { uploadAWS } from '../../common/aws.js';
+
 import { AWS_FOLDER, E_TUTOR_BUCKET } from '../../common/enum.js';
+import { uploadAWS } from '../../common/aws.js';
 import { mailer } from '../../common/mailer.js';
-import { renderFile } from 'ejs';
 
 export const loginAuthentication = async ({ email, password }) => {
     const response = {
