@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, Image, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import Loader from '../components/common/Loader';
-import Message from '../components/common/Message';
-import FormContainer from '../components/common/FormContainer';
+import Loader from '../../components/common/Loader';
+import Message from '../../components/common/Message';
+import FormContainer from '../../components/common/FormContainer';
 
-import { USER_UPDATE_RESET } from '../constants/user.constant';
-import { getUserDetailAction, updateUserAction, uploadUserAvatarAction } from '../actions/user.action';
-import { AWS_FOLDER } from '../config';
+import { USER_UPDATE_RESET } from '../../constants/user.constant';
+import { getUserDetailAction, updateUserAction, uploadUserAvatarAction } from '../../actions/user.action';
+import { AWS_FOLDER } from '../../config';
 
 const Profile = ({ match }) => {
     const [message, setMessage] = useState('');

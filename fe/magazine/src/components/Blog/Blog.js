@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import { AWS_FOLDER } from '../../config';
@@ -25,14 +25,17 @@ const Blog = ({ blog }) => {
 
                 <Card.Text as="div">
                     <div className="my-3 blog-content">
-                        Content: {blog.content}
+                        Content: {blog.content || 'No content'}
                     </div>
                 </Card.Text>
 
                 <Card.Text as="div">
                     <div className="d-flex justify-content-between">
                         <div className="my-3">
-                            {blog.createdBy.profile.firstName} {blog.createdBy.profile.lastName}
+                            <Image src={`${AWS_FOLDER.IMAGE}${blog.createdBy?.profile?.avatar}`} variant="top" roundedCircle={true} style={{ width: '30px', height: '30px' }} />
+                        </div>
+                        <div className="my-3" style={{ color: '#212142', fontWeight: 'bold' }}>
+                            {blog.createdBy.profile.firstName} {blog.createdBy.profile.lastName} -
                         </div>
                         <div className="my-3">
                             {formatDate(blog.createdAt)}
