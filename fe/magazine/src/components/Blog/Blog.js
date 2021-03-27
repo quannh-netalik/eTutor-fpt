@@ -13,7 +13,7 @@ const Blog = ({ blog }) => {
     return (
         <Card className="my-3 p-3 rounded">
             <Link to={`/blog/${blog._id}`}>
-                <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" rounded style={{ width: '300px', height: '130px' }} />
+                <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" rounded="true" style={{ width: '300px', height: '130px' }} />
             </Link>
 
             <Card.Body>

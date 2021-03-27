@@ -53,6 +53,13 @@ export const createFacultyService = async (data, currentUser) => {
     try {
         const faculty = await Faculty.findOne({ name: data.name });
         if (faculty) {
+            if (faculty.isDeleted)  {
+                const result = await Faculty.findOneAndUpdate({ _id: faculty._id }, { isDeleted: false }, { new: true });
+                response.data = result;
+
+                return response;
+            }
+
             return {
                 statusCode: 400,
                 message: 'Faculty existed',
@@ -125,7 +132,7 @@ export const deleteFacultyService = async ({ facultyId }) => {
     };
 
     try {
-        const faculty = await Faculty.findOneAndUpdate({ _id: facultyId }, { idDeleted: true }, { new: true });
+        const faculty = await Faculty.findOneAndUpdate({ _id: facultyId }, { isDeleted: true }, { new: true });
         if (!faculty) {
             return {
                 statusCode: 404,

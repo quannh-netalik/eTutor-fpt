@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import { Button, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { blogDetailAction, downloadBlogFile } from '../../actions/blog.action';
-import { commentListAction } from '../../actions/comment.action';
+import { commentCreateAction, commentListAction } from '../../actions/comment.action';
 
 import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
@@ -14,24 +14,45 @@ import { formatDate } from '../../utils';
 const BlogDetail = ({ match }) => {
     const dispatch = useDispatch();
     const [currentBlog, setCurrentBlog] = useState({});
-    const [blogComment, setBlogComment] = useState([]);
+
+    const [newComment, setNewComment] = useState('');
 
     const { user } = useSelector(({ userLogin }) => userLogin);
     const { loading: loadingDetail, error: errorDetail, blog } = useSelector(({ blogDetail }) => blogDetail);
     const { comments } = useSelector(({ commentList }) => commentList);
+    const { loading: loadingCreateComment } = useSelector(({ commentCreate }) => commentCreate);
 
     useEffect(() => {
         if (!blog?.title || match.params.id !== blog._id) {
             dispatch(blogDetailAction(match.params.id));
-            dispatch(commentListAction(match.params.id));
         } else {
             setCurrentBlog(blog);
-            setBlogComment(comments);
+            setNewComment('');
         }
     }, [match, blog]);
 
+    useEffect(() => {
+        if (!loadingCreateComment) {
+            dispatch(commentListAction(match.params.id));
+            setNewComment('');
+        }
+    }, [loadingCreateComment]);
+
     const handleDownloadFile = (fileId, fileName) => {
         dispatch(downloadBlogFile({ fileId, fileName, blogId: currentBlog._id }));
+    };
+
+    const handleComment = (e) => {
+        if (e.keyCode === 27) {
+            setNewComment('');
+        }
+
+        if (e.keyCode === 13 && newComment.length) {
+            dispatch(commentCreateAction({
+                blog: currentBlog._id,
+                content: newComment,
+            }));
+        }
     };
 
     return (
@@ -91,37 +112,48 @@ const BlogDetail = ({ match }) => {
                         )}
 
                         {(currentBlog?.faculty?._id && currentBlog.faculty._id === user?.faculty?._id) && (
-                            <div></div>
-                        )}
+                            <ListGroup.Item>
+                                <h5>Comments</h5>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Comment..."
+                                    style={{
+                                        border: '1px solid #c2c1c1'
+                                    }}
+                                    value={newComment}
+                                    rounded
+                                    onKeyUp={handleComment}
+                                    onChange={(e) => setNewComment(e.target.value)}
+                                    required={true}
+                                ></Form.Control>
 
-                        <ListGroup.Item>
-                            <h5>Comments</h5>
-                            {!!blogComment?.length && blogComment.map((cmt, index) => (
-                                <Row key={index} className="py-2">
-                                    <Col>
-                                        <Row className="align-items-center" style={{ minHeight: '50px' }}>
-                                            <Col md={1}>
-                                                <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle={true} style={{ width: '40px', height: '40px' }} />
-                                            </Col>
-                                            <Col>
-                                                <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
-                                                    <Row>
-                                                        <Col>
-                                                            <div style={{ fontWeight: 'bold', color: '#3f3ff2' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col>
-                                                            <div>{cmt.content}</div>
-                                                        </Col>
-                                                    </Row>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            ))}
-                        </ListGroup.Item>
+                                {!!comments?.length && comments.map((cmt, index) => (
+                                    <Row key={index} className="py-2">
+                                        <Col>
+                                            <Row className="align-items-center" style={{ minHeight: '50px' }}>
+                                                <Col md={1}>
+                                                    <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle={true} style={{ width: '40px', height: '40px' }} />
+                                                </Col>
+                                                <Col>
+                                                    <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
+                                                        <Row>
+                                                            <Col>
+                                                                <div style={{ fontWeight: 'bold', color: '#3f3ff2' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <div>{cmt.content}</div>
+                                                            </Col>
+                                                        </Row>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                ))}
+                            </ListGroup.Item>
+                        )}
                     </ListGroup>
                 </Col>
                 {/**Additional info */}
