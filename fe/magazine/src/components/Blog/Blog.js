@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Card, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
+
+import BlogLabel from '../common/BlogLabel';
 import { AWS_FOLDER } from '../../config';
 import { formatDate } from '../../utils';
 
@@ -19,7 +21,10 @@ const Blog = ({ blog }) => {
             <Card.Body>
                 <Link to={`/blog/${blog._id}`}>
                     <Card.Title as="div">
-                        <strong>Title: <b>{blog.title}</b></strong>
+                        <div className="d-flex justify-content-between">
+                            <strong>Title: <b>{blog.title}</b></strong>
+                            <BlogLabel status={blog.status} />
+                        </div>
                     </Card.Title>
                 </Link>
 
