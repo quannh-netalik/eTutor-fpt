@@ -178,9 +178,9 @@ const BlogDetail = ({ match }) => {
                                         currentBlog.faculty?.isDeleted ? (
                                             <div style={{ color: 'red', fontWeight: '800' }}>Deleted</div>
                                         ) : currentBlog.faculty?.isActive ? (
-                                            <div style={{ color: 'green', fontWeight: '800' }}>Active</div>
+                                            <span className="badge badge-success shadow-success m-1 rounded py-2 px-2">Active</span>
                                         ) : (
-                                            <div style={{ color: 'red', fontWeight: '800' }}>Suspended</div>
+                                            <span className="badge badge-danger shadow-danger m-1 rounded py-2 px-2">Suspended</span>
                                         )
                                     }
                                 </Col>
@@ -226,9 +226,9 @@ const BlogDetail = ({ match }) => {
                                 </Col>
                                 <Col>
                                     {currentBlog.term?.isActive ? (
-                                        <div style={{ color: 'green', fontWeight: '800' }}>Active</div>
+                                        <span className="badge badge-success shadow-success m-1 rounded py-2 px-2">Active</span>
                                     ) : (
-                                        <div style={{ color: 'red', fontWeight: '800' }}>Suspended</div>
+                                        <span className="badge badge-danger shadow-danger m-1 rounded py-2 px-2">Suspended</span>
                                     )}
                                 </Col>
                             </Row>
