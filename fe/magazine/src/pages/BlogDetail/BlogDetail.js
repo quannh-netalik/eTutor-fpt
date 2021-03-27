@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Image, ListGroup, Row } from 'react-bootstrap';
-
+import { Button, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { blogDetailAction, downloadBlogFile } from '../../actions/blog.action';
 import { commentListAction } from '../../actions/comment.action';
 
@@ -200,6 +200,11 @@ const BlogDetail = ({ match }) => {
                                     )}
                                 </Col>
                             </Row>
+                        </ListGroup.Item>
+                        <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
+                            <LinkContainer to="/">
+                                <Button variant="secondary">Back to blogs</Button>
+                            </LinkContainer>
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
