@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
 import Loader from '../../components/common/Loader';
@@ -92,6 +92,9 @@ const Faculty = () => {
                                 handleChangeTerm={handleChangeTerm}
                                 currentTerm={currentTerm}
                             />
+                        </ListGroup.Item>
+                        <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
+                            <Button className="rounded" variant="outline-success">Add new blog</Button>
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>

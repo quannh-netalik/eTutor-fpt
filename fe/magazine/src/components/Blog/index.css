@@ -6,3 +6,10 @@
     /* number of lines to show */
     -webkit-box-orient: vertical;
 }
+
+.blog-author {
+    color: #212142;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 10px;
+}

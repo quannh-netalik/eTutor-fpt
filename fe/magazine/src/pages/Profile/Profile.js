@@ -193,7 +193,7 @@ const Profile = ({ match }) => {
                                     <Form.Label>Faculty <span style={{ color: 'red' }}>*</span></Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={faculty?.name}
+                                        value={faculty?.name || ''}
                                         disabled={true}
                                     ></Form.Control>
                                 </Form.Group>
@@ -241,7 +241,7 @@ const Profile = ({ match }) => {
                     </Col>
                     <Col md={4}>
                         <div className="d-flex align-items-center flex-column">
-                            <Image src={avatarSrc || ''} roundedCircle fluid alt={user?._id} style={{ width: '205px', height: '205px', objectFit: 'cover' }} />
+                            <Image src={avatarSrc || ''} roundedCircle fluid style={{ width: '205px', height: '205px', objectFit: 'cover' }} />
                             <Form.File
                                 onChange={handleChangeAvatar}
                                 id="custom-file-translate-scss"

@@ -269,14 +269,16 @@ const UserDetail = ({ match, location }) => {
                     <Col md={4}>
                         <div className="d-flex align-items-center flex-column">
                             <Image src={avatarSrc || ''} roundedCircle fluid alt={user?._id} style={{ width: '205px', height: '205px', objectFit: 'cover' }} />
-                            <Form.File
-                                onChange={handleChangeAvatar}
-                                id="custom-file-translate-scss"
-                                label="Select avatar"
-                                accept='image/*'
-                                lang="en"
-                                custom
-                            />
+                            <div style={{ paddingTop: '10px' }}>
+                                <Form.File
+                                    onChange={handleChangeAvatar}
+                                    id="custom-file-translate-scss"
+                                    label="Select avatar"
+                                    accept='image/*'
+                                    lang="en"
+                                    custom
+                                />
+                            </div>
                         </div>
                     </Col>
                 </Row>

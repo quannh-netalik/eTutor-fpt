@@ -13,7 +13,7 @@ const Blog = ({ blog }) => {
     return (
         <Card className="my-3 p-3 rounded">
             <Link to={`/blog/${blog._id}`}>
-                <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" rounded="true" fluid />
+                <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" fluid="true" />
             </Link>
 
             <Card.Body>
@@ -39,18 +39,18 @@ const Blog = ({ blog }) => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={2}>
-                            <Image src={`${AWS_FOLDER.IMAGE}${blog.createdBy?.profile?.avatar}`} variant="top" roundedCircle={true} style={{ width: '30px', height: '30px' }} />
-                        </Col>
                         <Col>
-                            <div style={{ color: '#212142', fontWeight: 'bold' }}>
-                                {blog.createdBy.profile.firstName} {blog.createdBy.profile.lastName}
+                            <div className="d-flex">
+                                <Image src={`${AWS_FOLDER.IMAGE}${blog.createdBy?.profile?.avatar}`} variant="top" roundedCircle style={{ width: '30px', height: '30px' }} />
+                                <div className="blog-author">
+                                    {blog.createdBy.profile.firstName} {blog.createdBy.profile.lastName}
+                                </div>
                             </div>
                         </Col>
                     </Row>
                 </Card.Text>
 
-                <Card.Text as="div">
+                <Card.Text as="div" style={{ paddingTop: '20px' }}>
                     <div className="d-flex justify-content-end py-1">
                         From: {formatDate(blog.createdAt)}
                     </div>

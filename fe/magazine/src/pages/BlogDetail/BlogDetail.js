@@ -72,7 +72,7 @@ const BlogDetail = ({ match }) => {
                         </ListGroup.Item>
                         <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
                             <LinkContainer to="/">
-                                <Button className="rounded" variant="outline-secondary">Back to blogs</Button>
+                                <Button className="rounded" variant="secondary">Back to blogs</Button>
                             </LinkContainer>
                         </ListGroup.Item>
                     </ListGroup>
@@ -82,7 +82,7 @@ const BlogDetail = ({ match }) => {
                     {errorDetail && <Message variant="danger">{errorDetail}</Message>}
                     <ListGroup variant="flush">
                         <ListGroup.Item>
-                            <Image src={`${AWS_FOLDER.IMAGE}${currentBlog.bgImage}`} rounded={true} variant="top" fluid />
+                            <Image src={`${AWS_FOLDER.IMAGE}${currentBlog.bgImage}`} variant="top" fluid="true" />
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Row>
@@ -91,7 +91,7 @@ const BlogDetail = ({ match }) => {
                                 </Col>
                                 <Col className="align-items-center" style={{ paddingTop: '10px' }}>
                                     <Row>
-                                        <Image src={`${AWS_FOLDER.IMAGE}${currentBlog.createdBy?.profile?.avatar}`} variant="top" roundedCircle={true} style={{ width: '50px', height: '50px' }} />
+                                        <Image src={`${AWS_FOLDER.IMAGE}${currentBlog.createdBy?.profile?.avatar}`} variant="top" roundedCircle style={{ width: '50px', height: '50px' }} />
                                         <Col>
                                             <div>{currentBlog.createdBy?.profile?.firstName} {currentBlog.createdBy?.profile?.lastName}</div>
                                             <div>{formatDate(currentBlog.createdAt)}</div>
@@ -138,7 +138,6 @@ const BlogDetail = ({ match }) => {
                                         border: '1px solid #c2c1c1'
                                     }}
                                     value={newComment}
-                                    rounded
                                     onKeyUp={handleComment}
                                     onChange={(e) => setNewComment(e.target.value)}
                                     required={true}
@@ -149,7 +148,7 @@ const BlogDetail = ({ match }) => {
                                         <Col>
                                             <Row className="align-items-center" style={{ minHeight: '50px' }}>
                                                 <Col md={1}>
-                                                    <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle={true} style={{ width: '40px', height: '40px' }} />
+                                                    <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle style={{ width: '40px', height: '40px' }} />
                                                 </Col>
                                                 <Col>
                                                     <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
