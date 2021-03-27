@@ -79,7 +79,7 @@ const BlogDetail = ({ match }) => {
                                             <div
                                                 key={`${file.id}-${index}`}
                                                 className="py-2"
-                                                style={{ cursor: 'pointer', fontWeight: 'bold', color: 'blue' }}
+                                                style={{ cursor: 'pointer', fontWeight: 'bold', color: '#3f3ff2' }}
                                                 onClick={() => handleDownloadFile(file._id, file.fileName)}
                                             >
                                                 {file.fileName} <i className="fa fa-download pull-right"></i>
@@ -107,7 +107,7 @@ const BlogDetail = ({ match }) => {
                                                 <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
                                                     <Row>
                                                         <Col>
-                                                            <div style={{ fontWeight: 'bold', color: 'blue' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
+                                                            <div style={{ fontWeight: 'bold', color: '#3f3ff2' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
                                                         </Col>
                                                     </Row>
                                                     <Row>
