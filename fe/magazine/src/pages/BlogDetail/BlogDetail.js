@@ -4,12 +4,15 @@ import { Button, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { blogDetailAction, downloadBlogFile } from '../../actions/blog.action';
 import { commentCreateAction, commentListAction } from '../../actions/comment.action';
+import moment from 'moment-timezone';
 
 import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
 import FormContainer from '../../components/common/FormContainer';
 import { AWS_FOLDER } from '../../config';
 import { formatDate } from '../../utils';
+import FacultyInfo from '../../components/FacultyInfo';
+import TermInfo from '../../components/TermInfo';
 
 const BlogDetail = ({ match }) => {
     const dispatch = useDispatch();
@@ -58,6 +61,22 @@ const BlogDetail = ({ match }) => {
     return (
         <FormContainer md={12}>
             <Row>
+                {/**Additional info */}
+                <Col>
+                    <ListGroup>
+                        <ListGroup.Item>
+                            <FacultyInfo faculty={currentBlog.faculty} />
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <TermInfo currentTerm={currentBlog.term || {}} />
+                        </ListGroup.Item>
+                        <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
+                            <LinkContainer to="/">
+                                <Button className="rounded" variant="outline-secondary">Back to blogs</Button>
+                            </LinkContainer>
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Col>
                 <Col md={8}>
                     {loadingDetail && <Loader />}
                     {errorDetail && <Message variant="danger">{errorDetail}</Message>}
@@ -86,7 +105,6 @@ const BlogDetail = ({ match }) => {
                                 {currentBlog.content || 'No Content'}
                             </div>
                         </ListGroup.Item>
-
                         {(currentBlog.files && !!currentBlog.files.length) && (
                             <ListGroup.Item>
                                 <Row>
@@ -110,8 +128,7 @@ const BlogDetail = ({ match }) => {
                                 </Row>
                             </ListGroup.Item>
                         )}
-
-                        {(currentBlog?.faculty?._id && currentBlog.faculty._id === user?.faculty?._id) && (
+                        {(currentBlog.faculty?._id && currentBlog.faculty._id === user.profile.faculty?._id) && (
                             <ListGroup.Item>
                                 <h5>Comments</h5>
                                 <Form.Control
@@ -147,6 +164,11 @@ const BlogDetail = ({ match }) => {
                                                             </Col>
                                                         </Row>
                                                     </div>
+                                                    <Row>
+                                                        <div style={{ fontSize: '10px', paddingLeft: '20px' }}>
+                                                            {moment(cmt.createdAt).fromNow()}
+                                                        </div>
+                                                    </Row>
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -154,90 +176,6 @@ const BlogDetail = ({ match }) => {
                                 ))}
                             </ListGroup.Item>
                         )}
-                    </ListGroup>
-                </Col>
-                {/**Additional info */}
-                <Col>
-                    <ListGroup>
-                        <ListGroup.Item>
-                            <h2>Faculty</h2>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>Name: </strong>
-                                </Col>
-                                <Col>
-                                    <div>{currentBlog.faculty?.name}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>Status: </strong>
-                                </Col>
-                                <Col>
-                                    {
-                                        currentBlog.faculty?.isDeleted ? (
-                                            <div style={{ color: 'red', fontWeight: '800' }}>Deleted</div>
-                                        ) : currentBlog.faculty?.isActive ? (
-                                            <span className="badge badge-success shadow-success m-1 rounded py-2 px-2">Active</span>
-                                        ) : (
-                                            <span className="badge badge-danger shadow-danger m-1 rounded py-2 px-2">Suspended</span>
-                                        )
-                                    }
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                            <h2>Term</h2>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>Name: </strong>
-                                </Col>
-                                <Col>
-                                    <div>{currentBlog.term?.name}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>Description: </strong>
-                                </Col>
-                                <Col>
-                                    <div>{currentBlog.term?.description}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>Start Date: </strong>
-                                </Col>
-                                <Col>
-                                    <div>{formatDate(currentBlog.term?.startDate)}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>End Date: </strong>
-                                </Col>
-                                <Col>
-                                    <div>{formatDate(currentBlog.term?.endDate)}</div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}>
-                                    <strong>Status: </strong>
-                                </Col>
-                                <Col>
-                                    {currentBlog.term?.isActive ? (
-                                        <span className="badge badge-success shadow-success m-1 rounded py-2 px-2">Active</span>
-                                    ) : (
-                                        <span className="badge badge-danger shadow-danger m-1 rounded py-2 px-2">Suspended</span>
-                                    )}
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
-                        <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
-                            <LinkContainer to="/">
-                                <Button variant="secondary">Back to blogs</Button>
-                            </LinkContainer>
-                        </ListGroup.Item>
                     </ListGroup>
                 </Col>
             </Row>

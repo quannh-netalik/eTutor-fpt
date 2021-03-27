@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import BlogDetail from './pages/BlogDetail';
+import Faculty from './pages/Faculty';
 
 const App = () => {
     return (
@@ -17,11 +18,7 @@ const App = () => {
                     <PrivateRoute path="/" exact component={Dashboard} />
                     <PrivateRoute path="/profile/:id" exact component={Profile} />
                     <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
-                    {/* <PrivateRoute path="/faculty/detail/:id" exact component={FacultyDetail} />
-                    <PrivateRoute path="/term" exact component={Term} />
-                    <PrivateRoute path="/term/detail/:id" exact component={TermDetail} />
-                    <PrivateRoute path="/user" exact component={User} />
-                    <PrivateRoute path="/user/detail/:id" exact component={UserDetail} />*/}
+                    <PrivateRoute path="/faculty" exact component={Faculty} />
                     <Route path="*" component={NotFound} />
                 </Switch>
             </MainLayout>
