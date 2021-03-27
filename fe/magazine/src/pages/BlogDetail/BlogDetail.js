@@ -104,7 +104,7 @@ const BlogDetail = ({ match }) => {
                                                 <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle={true} style={{ width: '40px', height: '40px' }} />
                                             </Col>
                                             <Col>
-                                                <div style={{ backgroundColor: '#c3cace', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
+                                                <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
                                                     <Row>
                                                         <Col>
                                                             <div style={{ fontWeight: 'bold', color: 'blue' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
