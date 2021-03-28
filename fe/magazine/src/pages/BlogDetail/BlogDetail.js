@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, Image, ListGroup, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+
 import { blogDetailAction, downloadBlogFile } from '../../actions/blog.action';
 import { commentCreateAction, commentListAction } from '../../actions/comment.action';
 import moment from 'moment-timezone';
@@ -14,7 +15,10 @@ import { formatDate } from '../../utils';
 import FacultyInfo from '../../components/FacultyInfo';
 import TermInfo from '../../components/TermInfo';
 
-const BlogDetail = ({ match }) => {
+const BlogDetail = ({ match, location }) => {
+    const query = new URLSearchParams(location.search);
+    const redirect = query.get('redirect');
+
     const dispatch = useDispatch();
     const [currentBlog, setCurrentBlog] = useState({});
 
@@ -71,8 +75,8 @@ const BlogDetail = ({ match }) => {
                             <TermInfo currentTerm={currentBlog.term || {}} />
                         </ListGroup.Item>
                         <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
-                            <LinkContainer to="/">
-                                <Button className="rounded" variant="secondary">Back to blogs</Button>
+                            <LinkContainer to={redirect}>
+                                <Button className="rounded" variant="secondary">Back to blog list</Button>
                             </LinkContainer>
                         </ListGroup.Item>
                     </ListGroup>

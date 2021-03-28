@@ -70,7 +70,7 @@ const Dashboard = () => {
             <Row>
                 {blogs?.data && blogs.data.map((blog, index) => (
                     <Col key={`${blog._id}-${index}`} sm={12} md={6} lg={4} xl={4}>
-                        <Blog blog={blog} />
+                        <Blog blog={blog} redirect="/" />
                     </Col>
                 ))}
             </Row>

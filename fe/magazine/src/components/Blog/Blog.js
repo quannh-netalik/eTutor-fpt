@@ -9,15 +9,17 @@ import { formatDate } from '../../utils';
 
 import './index.css';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, redirect }) => {
+    const linkToBlogDetail = `/blog/${blog._id}?redirect=${redirect}`;
+
     return (
         <Card className="my-3 p-3 rounded">
-            <Link to={`/blog/${blog._id}`}>
+            <Link to={linkToBlogDetail}>
                 <Card.Img src={`${AWS_FOLDER.IMAGE}${blog.bgImage}`} variant="top" fluid="true" />
             </Link>
 
             <Card.Body>
-                <Link to={`/blog/${blog._id}`}>
+                <Link to={linkToBlogDetail}>
                     <Card.Title as="div">
                         <div className="d-flex justify-content-between">
                             <h2>{blog.title}</h2>
@@ -60,7 +62,7 @@ const Blog = ({ blog }) => {
                 </Card.Text>
 
                 <Card.Text as="h3">
-                    <LinkContainer to={`/blog/${blog._id}`}>
+                    <LinkContainer to={linkToBlogDetail}>
                         <div className="d-flex my-3 justify-content-end">
                             <Button className="btn-sm rounded" variant="outline-secondary"><i className="fa fa-star mr-1"></i>Read more</Button>
                         </div>

@@ -134,7 +134,7 @@ const Faculty = () => {
                                     </Row>
                                     {!!blogs?.data && blogs.data.map((blog, index) => (
                                         <Col key={index}>
-                                            <Blog blog={blog} />
+                                            <Blog blog={blog} redirect="/faculty" />
                                         </Col>
                                     ))}
                                 </>
