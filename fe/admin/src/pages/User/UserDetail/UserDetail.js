@@ -205,7 +205,12 @@ const UserDetail = ({ match, location }) => {
 
                                 <Form.Group controlId="role">
                                     <Form.Label>Role <span style={{ color: 'red' }}>*</span></Form.Label>
-                                    <Form.Control as="select" value={role} onChange={(e) => setRole(e.target.value)}>
+                                    <Form.Control
+                                        as="select"
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
+                                        disabled={isMyProfile}
+                                    >
                                         <option key="admin" value='admin'>Admin</option>
                                         <option key="manager" value='manager'>Manager</option>
                                         <option key="coordinator" value='coordinator'>Coordinator</option>

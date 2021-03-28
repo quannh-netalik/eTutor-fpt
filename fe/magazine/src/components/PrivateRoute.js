@@ -16,8 +16,9 @@ const PrivateRoute = ({ component: Component, role, ...rest }) => {
         }
 
         // validate role
-        if (role) {
+        if (role && user) {
             if (role !== user.profile.role) {
+                dispatch(logoutAction());
                 history.push('/login');
             }
         }
