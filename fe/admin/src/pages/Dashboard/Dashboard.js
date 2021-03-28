@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { Bar } from 'react-chartjs-2';
+
+import Input from '../../components/common/Input';
+
 import { statisticReport } from '../../actions/report.action';
 import { getListTerm } from '../../actions/term.action';
-import Input from '../../components/UI/Input';
-import { Bar } from 'react-chartjs-2';
 
 
 const Dashboard = () => {
