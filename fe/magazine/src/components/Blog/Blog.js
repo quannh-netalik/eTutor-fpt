@@ -29,18 +29,11 @@ const Blog = ({ blog, redirect, censorship }) => {
         }));
 
         if (blogs.data) {
-            const updateBlog = blogs.data.find(({ _id }) => _id === blogId);
             dispatch({
                 type: BLOG_LIST_SUCCESS,
                 payload: {
                     ...blogs,
-                    data: [
-                        ...blogs.data.filter(({ _id }) => _id !== blogId),
-                        {
-                            ...updateBlog,
-                            status,
-                        }
-                    ]
+                    data: blogs.data.map(blog => blog._id === blogId ? { ...blog, status } : blog)
                 }
             });
         }
