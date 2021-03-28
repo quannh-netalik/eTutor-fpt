@@ -26,21 +26,20 @@ const Dashboard = () => {
     return (
         <Container>
             <h1>Welcome back, {user?.profile?.firstName} {user?.profile?.lastName}.</h1>
-            {
-                terms && <Input
+            {terms && (
+                <Input
                     label="Term"
-                    type='select'
+                    type="select"
                     value={termId}
                     onChange={(e) => setTermId(e.target.value)}
                     options={terms}
-                    placeholder={'Select Term'}
+                    placeholder="Select Term"
                 />
-            }
+            )}
             <Row>
-                <Col sm='12'>
-
-                    {
-                        (statistic && Array.isArray(statistic)) && <Bar
+                <Col sm="12">
+                    {(statistic && Array.isArray(statistic)) && (
+                        <Bar
                             data={{
                                 labels: statistic.filter(x => x._id.term === termId).map(x => x._id.facultyName),
                                 datasets: [{
@@ -88,12 +87,11 @@ const Dashboard = () => {
                                 }
                             }}
                         />
-                    }
+                    )}
                 </Col>
                 <Col sm='12'>
-
-                    {
-                        (statistic && Array.isArray(statistic)) && <Bar
+                    {(statistic && Array.isArray(statistic)) && (
+                        <Bar
                             data={{
                                 labels: statistic.filter(x => x._id.term === termId).map(x => x._id.facultyName),
                                 datasets: [{
@@ -143,12 +141,9 @@ const Dashboard = () => {
                                 }
                             }}
                         />
-                    }
+                    )}
                 </Col>
-
             </Row>
-
-
         </Container>
     );
 };

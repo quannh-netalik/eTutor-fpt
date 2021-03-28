@@ -19,13 +19,13 @@ const App = () => {
                 <Switch>
 
                     <Route path="/login" exact component={Login} />
-                    <PrivateRoute path="/" exact component={Dashboard} />
-                    <PrivateRoute path="/faculty" exact component={Faculty} />
-                    <PrivateRoute path="/faculty/detail/:id" exact component={FacultyDetail} />
-                    <PrivateRoute path="/term" exact component={Term} />
-                    <PrivateRoute path="/term/detail/:id" exact component={TermDetail} />
-                    <PrivateRoute path="/user" exact component={User} />
-                    <PrivateRoute path="/user/detail/:id" exact component={UserDetail} />
+                    <PrivateRoute path="/" exact role="admin" component={Dashboard} />
+                    <PrivateRoute path="/faculty" exact role="admin" component={Faculty} />
+                    <PrivateRoute path="/faculty/detail/:id" exact role="admin" component={FacultyDetail} />
+                    <PrivateRoute path="/term" exact role="admin" component={Term} />
+                    <PrivateRoute path="/term/detail/:id" exact role="admin" component={TermDetail} />
+                    <PrivateRoute path="/user" exact role="admin" component={User} />
+                    <PrivateRoute path="/user/detail/:id" exact role="admin" component={UserDetail} />
                     <Route path="*" component={NotFound} />
                 </Switch>
             </MainLayout>

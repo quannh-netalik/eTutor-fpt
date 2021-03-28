@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { API_CONFIG } from '../config';
+
 import {
     STATISTIC_REPORT_REQUEST,
     STATISTIC_REPORT_SUCCESS,
-    STATISTIC_REPORT_FAIL
+    STATISTIC_REPORT_FAIL,
 } from '../constants/report.constant';
+import { API_CONFIG } from '../config';
 import { getToken } from '../utils';
 
 export const statisticReport = () => async (dispatch) => {
@@ -28,4 +29,3 @@ export const statisticReport = () => async (dispatch) => {
         });
     }
 };
-

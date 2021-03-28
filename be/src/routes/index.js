@@ -36,5 +36,4 @@ export default (app) => {
 
     // routing to report
     reportRoute(router);
-    
 };
