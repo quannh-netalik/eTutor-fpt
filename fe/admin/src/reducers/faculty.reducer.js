@@ -9,6 +9,7 @@ import {
     FACULTY_CREATE_REQUEST,
     FACULTY_CREATE_SUCCESS,
     FACULTY_CREATE_FAIL,
+    FACULTY_CREATE_RESET,
     FACULTY_UPDATE_REQUEST,
     FACULTY_UPDATE_SUCCESS,
     FACULTY_UPDATE_FAIL,
@@ -77,6 +78,8 @@ export const createFacultyReducer = (state = { faculty: {} }, action) => {
                 loading: false,
                 error: action.payload
             };
+        case FACULTY_CREATE_RESET:
+            return {};
         default:
             return state;
     }

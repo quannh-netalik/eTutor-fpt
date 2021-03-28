@@ -22,8 +22,8 @@ export const getBlogService = async (blogId) => {
             isDeleted: false,
         })
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: '_id name' })
-            .populate({ path: 'term', select: '_id name description startDate endDate' })
+            .populate({ path: 'faculty', select: '_id name isActive isDeleted' })
+            .populate({ path: 'term', select: '_id name description startDate endDate isActive' })
             .lean();
         if (!blog) {
             return {
@@ -36,7 +36,7 @@ export const getBlogService = async (blogId) => {
         const comments = await Comment.find({ blog: blog._id })
             .sort({ updatedAt: -1 })
             .populate({ path: 'user', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .select('content user')
+            .select('user')
             .limit(10)
             .lean();
 
@@ -60,14 +60,17 @@ export const listBlogService = async (filter = {}, limit, skip) => {
     };
 
     try {
-        const total = await Blog.countDocuments(filter);
+        const total = await Blog.countDocuments({
+            ...filter,
+            isDeleted: false,
+        });
         const blogs = await Blog.find({
             ...filter,
             isDeleted: false,
         })
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: '_id name' })
-            .populate({ path: 'term', select: '_id name description startDate endDate' })
+            .populate({ path: 'faculty', select: '_id name isActive isDeleted' })
+            .populate({ path: 'term', select: '_id name description startDate endDate isActive' })
             .sort({ updatedAt: -1 })
             .limit(limit)
             .skip(skip)
@@ -77,7 +80,7 @@ export const listBlogService = async (filter = {}, limit, skip) => {
             const comments = await Comment.find({ blog: blog._id })
                 .sort({ updatedAt: -1 })
                 .populate({ path: 'user', select: 'email profile.firstName profile.lastName profile.avatar' })
-                .select('content user')
+                .select('user')
                 .limit(5)
                 .lean();
 
@@ -151,6 +154,7 @@ export const createBlogService = async ({ data, user: currentUser }) => {
 
         const blog = await Blog.create({
             title: data.title,
+            bgImage: 'default_blog_bgimage.jpg',
             content: data.content,
             createdBy: currentUser._id,
             faculty: data.faculty,
@@ -159,8 +163,8 @@ export const createBlogService = async ({ data, user: currentUser }) => {
 
         response.data = await blog
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: 'name' })
-            .populate({ path: 'term', select: 'name description startDate endDate' })
+            .populate({ path: 'faculty', select: 'name isActive isDeleted' })
+            .populate({ path: 'term', select: 'name description startDate endDate isActive' })
             .execPopulate();
     } catch (err) {
         response.statusCode = 500;
@@ -223,8 +227,8 @@ export const updateBlogService = async ({ blogId, data }) => {
 
         const blog = await Blog.findOneAndUpdate({ _id: blogId, isDeleted: false }, updateData, { new: true })
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: 'name' })
-            .populate({ path: 'term', select: 'name description startDate endDate' });
+            .populate({ path: 'faculty', select: 'name isActive isDeleted' })
+            .populate({ path: 'term', select: 'name description startDate endDate isActive' });
         if (!blog) {
             return {
                 statusCode: 404,
@@ -255,8 +259,8 @@ export const deleteBlogService = async (blogId) => {
             isDeleted: true,
         }, { new: true })
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: 'name' })
-            .populate({ path: 'term', select: 'name description startDate endDate' });
+            .populate({ path: 'faculty', select: 'name isActive isDeleted' })
+            .populate({ path: 'term', select: 'name description startDate endDate isActive' });
         if (!blog) {
             return {
                 statusCode: 404,
@@ -284,8 +288,8 @@ export const uploadBlogBgImgService = async ({ blogId, file }) => {
     try {
         const blog = await Blog.findOne({ _id: blogId, isDeleted: false })
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: 'name' })
-            .populate({ path: 'term', select: 'name description startDate endDate' });
+            .populate({ path: 'faculty', select: 'name isActive isDeleted' })
+            .populate({ path: 'term', select: 'name description startDate endDate isActive' });
         if (!blog) {
             return {
                 statusCode: 404,
@@ -341,8 +345,8 @@ export const uploadBlogFileService = async ({ blogId, files }) => {
 
         const newBlog = await Blog.findOne({ _id: blogId, isDeleted: false })
             .populate({ path: 'createdBy', select: 'email profile.firstName profile.lastName profile.avatar' })
-            .populate({ path: 'faculty', select: 'name' })
-            .populate({ path: 'term', select: 'name description startDate endDate' });
+            .populate({ path: 'faculty', select: 'name isActive isDeleted' })
+            .populate({ path: 'term', select: 'name description startDate endDate isActive' });
 
         response.data = newBlog;
     } catch (err) {

@@ -19,7 +19,7 @@ export const loginAuthentication = async ({ email, password }) => {
     };
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate({ path: 'profile.faculty' });
         if (!user || !user.comparePassword(password)) {
             return {
                 statusCode: 401,
@@ -186,7 +186,10 @@ export const updateUserService = async ({ userId, data }) => {
 
     try {
         const updateData = sanitizeUpdateData(data);
-        const user = await User.findOneAndUpdate({ _id: userId }, updateData, { new: true });
+        const user = await User.findOneAndUpdate({
+            _id: userId
+        }, updateData, { new: true })
+        .populate({ path: 'profile.faculty', select: 'name isActive isDeleted'});
         if (!user) {
             return {
                 statusCode: 404,
@@ -254,7 +257,9 @@ export const uploadUserAvatar = async ({ userId, avatar }) => {
     };
 
     try {
-        const user = await User.findOne({ _id: userId }).select('email profile createdAt');
+        const user = await User.findOne({ _id: userId })
+            .select('email profile createdAt')
+            .populate({ path: 'profile.faculty', select: 'name isActive isDeleted'});
         if (!user) {
             return {
                 statusCode: 404,

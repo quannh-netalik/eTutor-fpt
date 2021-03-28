@@ -9,7 +9,10 @@ export const getFacultyService = async (id) => {
     };
 
     try {
-        const faculty = await Faculty.findById(id);
+        const faculty = await Faculty.findOne({
+            _id: id,
+            isDeleted: false,
+        });
         response.data = await Faculty.populate(faculty, { path: 'createdBy', select: 'email profile' });
     } catch (err) {
         response.statusCode = 500;
@@ -27,7 +30,10 @@ export const getListFacultyService = async (filter = {}) => {
     };
 
     try {
-        const faculties = await Faculty.find(filter);
+        const faculties = await Faculty.find({
+            ...filter,
+            isDeleted: false,
+        });
         response.data = await Faculty.populate(faculties, { path: 'createdBy', select: 'email profile' });
     } catch (err) {
         response.statusCode = 500;
@@ -47,6 +53,13 @@ export const createFacultyService = async (data, currentUser) => {
     try {
         const faculty = await Faculty.findOne({ name: data.name });
         if (faculty) {
+            if (faculty.isDeleted)  {
+                const result = await Faculty.findOneAndUpdate({ _id: faculty._id }, { isDeleted: false }, { new: true });
+                response.data = result;
+
+                return response;
+            }
+
             return {
                 statusCode: 400,
                 message: 'Faculty existed',
@@ -119,24 +132,7 @@ export const deleteFacultyService = async ({ facultyId }) => {
     };
 
     try {
-        // check whether user in faculty or not
-        const userInFaculty = await User.findOne({
-            'profile.faculty': facultyId
-        });
-        // return err if found user
-        if (userInFaculty) {
-            return {
-                statusCode: 400,
-                message: 'Still have user in faculty',
-                data: {
-                    _id: userInFaculty._id,
-                    email: userInFaculty.email,
-                    profile: userInFaculty.profile,
-                },
-            };
-        }
-
-        const faculty = await Faculty.findOneAndDelete({ _id: facultyId });
+        const faculty = await Faculty.findOneAndUpdate({ _id: facultyId }, { isDeleted: true }, { new: true });
         if (!faculty) {
             return {
                 statusCode: 404,

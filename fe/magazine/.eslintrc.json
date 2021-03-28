@@ -9,7 +9,8 @@
         "fetch": true,
         "document": true,
         "FileReader": true,
-        "FormData": true
+        "FormData": true,
+        "window": true
     },
     "extends": [
         "eslint:recommended",

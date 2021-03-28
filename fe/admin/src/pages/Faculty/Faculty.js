@@ -6,6 +6,7 @@ import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
 import { formatDate } from '../../utils';
 import { LinkContainer } from 'react-router-bootstrap';
+import { FACULTY_CREATE_RESET } from '../../constants/faculty.constant';
 
 
 const Faculty = () => {
@@ -23,6 +24,7 @@ const Faculty = () => {
     }, [dispatch, loadingCreate, loadingDelete]);
 
     const resetField = () => {
+        dispatch({ type: FACULTY_CREATE_RESET });
         setNewFacultyName('');
         setCreateMessage('');
         setCrateShow(false);
@@ -31,10 +33,12 @@ const Faculty = () => {
     const createFacultyHandler = (e) => {
         e.preventDefault();
         dispatch(createFacultyAction({ name: newFacultyName }));
-        setCreateMessage('Create new faculty successful');
-        setTimeout(() => {
-            resetField();
-        }, 1000);
+        if (!loadingCreate && !errorCreate) {
+            // setCreateMessage('Create new faculty successful');
+            setTimeout(() => {
+                resetField();
+            }, 1000);
+        }
     };
 
     const onDeleteHandler = (facultyId) => {

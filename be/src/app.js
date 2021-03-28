@@ -6,7 +6,6 @@ import morgan from 'morgan';
 
 import route from './routes/index.js';
 import { allowCors, notFound, errorHandler } from './middlewares/index.js';
-import { mailer } from './common/mailer.js';
 
 const app = express();
 app.set('port', process.env.PORT);

@@ -77,7 +77,6 @@ const Profile = ({ match }) => {
                     address,
                     city,
                     phone,
-                    faculty,
                 },
             },
         }));
@@ -194,7 +193,7 @@ const Profile = ({ match }) => {
                                     <Form.Label>Faculty <span style={{ color: 'red' }}>*</span></Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={faculty}
+                                        value={faculty?.name || ''}
                                         disabled={true}
                                     ></Form.Control>
                                 </Form.Group>
@@ -233,8 +232,8 @@ const Profile = ({ match }) => {
                         </Row>
 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <LinkContainer to="/user">
-                                <Button type="submit" variant="light">Back</Button>
+                            <LinkContainer to="/">
+                                <Button type="submit" variant="light">Back To Dashboard</Button>
                             </LinkContainer>
 
                             <Button type="submit" variant="dark">Update</Button>
@@ -242,7 +241,7 @@ const Profile = ({ match }) => {
                     </Col>
                     <Col md={4}>
                         <div className="d-flex align-items-center flex-column">
-                            <Image src={avatarSrc || ''} roundedCircle fluid alt={user?._id} style={{ width: '205px', height: '205px', objectFit: 'cover' }} />
+                            <Image src={avatarSrc || ''} roundedCircle fluid style={{ width: '205px', height: '205px', objectFit: 'cover' }} />
                             <Form.File
                                 onChange={handleChangeAvatar}
                                 id="custom-file-translate-scss"
