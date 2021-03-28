@@ -19,7 +19,6 @@ export const getBlog = async (req, res) => {
 
 export const listBlog = async (req, res) => {
     const query = queryBuilder(req.query);
-
     const limit = parseInt(req.query.limit, 10) || 10;
     const skip = parseInt(req.query.skip, 10) || 0;
     const { statusCode, message, data } = await listBlogService(query, limit, skip);

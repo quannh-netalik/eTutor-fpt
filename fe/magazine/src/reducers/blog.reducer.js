@@ -9,6 +9,10 @@ import {
     BLOG_CREATE_SUCCESS,
     BLOG_CREATE_FAIL,
     BLOG_CREATE_RESET,
+    BLOG_UPDATE_REQUEST,
+    BLOG_UPDATE_SUCCESS,
+    BLOG_UPDATE_FAIL,
+    BLOG_UPDATE_RESET,
 } from '../constants/blog.reducer';
 
 const blogDetailReducer = (state = { blog: [] }, action) => {
@@ -76,8 +80,32 @@ const blogCreateReducer = (state = { blog: {} }, action) => {
     }
 };
 
+const blogUpdateReducer = (state = { blog: {} }, action) => {
+    switch (action.type) {
+        case BLOG_UPDATE_REQUEST:
+            return {
+                loading: true,
+            };
+        case BLOG_UPDATE_SUCCESS:
+            return {
+                loading: false,
+                blog: action.payload,
+            };
+        case BLOG_UPDATE_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+            };
+        case BLOG_UPDATE_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
+
 export default {
     blogDetail: blogDetailReducer,
     blogList: blogListReducer,
     blogCreate: blogCreateReducer,
+    blogUpdate: blogUpdateReducer,
 };

@@ -63,7 +63,7 @@ const Dashboard = () => {
                     nextLinkClassName={'page-link'}
                     previousClassName={'page-item'}
                     previousLinkClassName={'page-link'}
-                    pageClassNam={'page-item'}
+                    pageClassName={'page-item'}
                     pageLinkClassName={'page-link'}
                 />
             </Row>

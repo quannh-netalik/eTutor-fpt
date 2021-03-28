@@ -71,7 +71,6 @@ const CreateBlog = ({ history, location }) => {
         reader.onload = (e) => {
             setBgImageSrc(e.target.result);
         };
-        console.log(bgImage);
         setBgImage(e.target.files[0]);
     };
 

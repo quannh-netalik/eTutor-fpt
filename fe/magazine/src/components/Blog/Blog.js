@@ -2,15 +2,49 @@ import React from 'react';
 import { Button, Card, Col, Image, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import BlogLabel from '../common/BlogLabel';
 import { AWS_FOLDER } from '../../config';
 import { formatDate } from '../../utils';
 
 import './index.css';
+import { updateBlogAction } from '../../actions/blog.action';
+import { BLOG_LIST_SUCCESS } from '../../constants/blog.reducer';
 
-const Blog = ({ blog, redirect }) => {
+const Blog = ({ blog, redirect, censorship }) => {
+    const dispatch = useDispatch();
+
+    const { user } = useSelector(({ userLogin }) => userLogin);
+    const { blogs } = useSelector(({ blogList }) => blogList);
+
     const linkToBlogDetail = `/blog/${blog._id}?redirect=${redirect}`;
+
+    const setStatusBlog = (blogId, status) => {
+        dispatch(updateBlogAction({
+            id: blog._id,
+            body: {
+                status,
+            },
+        }));
+
+        if (blogs.data) {
+            const updateBlog = blogs.data.find(({ _id }) => _id === blogId);
+            dispatch({
+                type: BLOG_LIST_SUCCESS,
+                payload: {
+                    ...blogs,
+                    data: [
+                        ...blogs.data.filter(({ _id }) => _id !== blogId),
+                        {
+                            ...updateBlog,
+                            status,
+                        }
+                    ]
+                }
+            });
+        }
+    };
 
     return (
         <Card className="my-3 p-3 rounded">
@@ -61,13 +95,30 @@ const Blog = ({ blog, redirect }) => {
                     </div>
                 </Card.Text>
 
-                <Card.Text as="h3">
-                    <LinkContainer to={linkToBlogDetail}>
-                        <div className="d-flex my-3 justify-content-end">
-                            <Button className="btn-sm rounded" variant="outline-secondary"><i className="fa fa-star mr-1"></i>Read more</Button>
-                        </div>
-                    </LinkContainer>
+                <Card.Text as="div" className="d-flex justify-content-between">
+                    <Card.Text as="div">
+                        {/** Validate only when is censorship, pending blog with coordinator role */}
+                        {(censorship && blog.status === 'pending' && user.profile.role === 'coordinator') && (
+                            <Row>
+                                <Col>
+                                    <Button className="rounded" variant="outline-success" onClick={() => setStatusBlog(blog._id, 'approve')}>Approve</Button>
+                                </Col>
+                                <Col>
+                                    <Button className="rounded" variant="outline-danger" onClick={() => setStatusBlog(blog._id, 'reject')}>Reject</Button>
+                                </Col>
+                            </Row>
+                        )}
+                    </Card.Text>
+                    <Card.Text as="h3">
+                        <LinkContainer to={linkToBlogDetail}>
+                            <Button className="btn-sm rounded my-3" variant="outline-secondary">
+                                <i className="fa fa-star mr-1"></i>Read more
+                            </Button>
+                        </LinkContainer>
+                    </Card.Text>
                 </Card.Text>
+
+
             </Card.Body>
         </Card>
     );

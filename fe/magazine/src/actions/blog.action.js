@@ -12,6 +12,9 @@ import {
     BLOG_CREATE_REQUEST,
     BLOG_CREATE_SUCCESS,
     BLOG_CREATE_FAIL,
+    BLOG_UPDATE_REQUEST,
+    BLOG_UPDATE_SUCCESS,
+    BLOG_UPDATE_FAIL,
 } from '../constants/blog.reducer';
 import { API_CONFIG } from '../config';
 import { getToken } from '../utils';
@@ -143,6 +146,30 @@ export const blogCreateAction = ({body, bgImage, file}) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: BLOG_CREATE_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
+    }
+};
+
+export const updateBlogAction = ({id, body}) => async (dispatch) => {
+    try {
+        dispatch({ type: BLOG_UPDATE_REQUEST });
+        const token = getToken();
+
+        const { data: { data } } = await axios.put(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs/${id}`, body, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        dispatch({
+            type: BLOG_UPDATE_SUCCESS,
+            payload: data
+        });
+    } catch(error) {
+        dispatch({
+            type: BLOG_UPDATE_FAIL,
             payload: error.response?.data?.message || error.message,
         });
     }
