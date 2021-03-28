@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
@@ -55,10 +56,10 @@ const Faculty = () => {
         if (!loadingTermDetail) {
             // get the blog list as the term changed
             dispatch(blogListAction({
-                term: term._id,
+                term: term?._id,
                 faculty: user.profile.faculty?._id,
             }));
-            setCurrentTerm(term);
+            setCurrentTerm(term || {});
         }
     }, [loadingTermDetail]);
 
@@ -93,9 +94,21 @@ const Faculty = () => {
                                 currentTerm={currentTerm}
                             />
                         </ListGroup.Item>
-                        <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
-                            <Button className="rounded" variant="outline-success">Add new blog</Button>
-                        </ListGroup.Item>
+
+                        {
+                            (
+                                user.profile.role === 'student' &&
+                                currentTerm.isActive &&
+                                (new Date() > new Date(currentTerm.startDate) && new Date < new Date(currentTerm.endDate))
+                            )
+                                && (
+                                    <ListGroup.Item className="d-flex justify-content-center" style={{ padding: 20 }}>
+                                        <LinkContainer to={`/blog/create?termId=${currentTerm._id}`}>
+                                            <Button className="rounded" variant="outline-success">Add new blog</Button>
+                                        </LinkContainer>
+                                    </ListGroup.Item>
+                                )
+                        }
                     </ListGroup>
                 </Col>
                 <Col>

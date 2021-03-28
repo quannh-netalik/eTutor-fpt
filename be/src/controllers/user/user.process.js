@@ -257,7 +257,9 @@ export const uploadUserAvatar = async ({ userId, avatar }) => {
     };
 
     try {
-        const user = await User.findOne({ _id: userId }).select('email profile createdAt');
+        const user = await User.findOne({ _id: userId })
+            .select('email profile createdAt')
+            .populate({ path: 'profile.faculty', select: 'name isActive isDeleted'});
         if (!user) {
             return {
                 statusCode: 404,

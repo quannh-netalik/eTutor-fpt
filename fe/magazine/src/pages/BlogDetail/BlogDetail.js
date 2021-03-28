@@ -132,53 +132,61 @@ const BlogDetail = ({ match, location }) => {
                                 </Row>
                             </ListGroup.Item>
                         )}
-                        {(currentBlog.faculty?._id && currentBlog.faculty._id === user.profile.faculty?._id) && (
-                            <ListGroup.Item>
-                                <h5>Comments</h5>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Comment..."
-                                    style={{
-                                        border: '1px solid #c2c1c1'
-                                    }}
-                                    value={newComment}
-                                    onKeyUp={handleComment}
-                                    onChange={(e) => setNewComment(e.target.value)}
-                                    required={true}
-                                ></Form.Control>
 
-                                {!!comments?.length && comments.map((cmt, index) => (
-                                    <Row key={index} className="py-2">
-                                        <Col>
-                                            <Row className="align-items-center" style={{ minHeight: '50px' }}>
-                                                <Col md={1}>
-                                                    <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle style={{ width: '40px', height: '40px' }} />
-                                                </Col>
-                                                <Col>
-                                                    <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
-                                                        <Row>
-                                                            <Col>
-                                                                <div style={{ fontWeight: 'bold', color: '#3f3ff2' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col>
-                                                                <div>{cmt.content}</div>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                    <Row>
-                                                        <div style={{ fontSize: '10px', paddingLeft: '20px' }}>
-                                                            {moment(cmt.createdAt).fromNow()}
+                        {
+                            // validate with same faculty
+                            // validate is student or coordinator
+                            (
+                                (currentBlog.faculty?._id && currentBlog.faculty._id === user.profile.faculty?._id) &&
+                                (user.profile.role === 'student' || user.profile.role === 'coordinator')
+                            ) && (
+                                <ListGroup.Item>
+                                    <h5>Comments</h5>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Comment..."
+                                        style={{
+                                            border: '1px solid #c2c1c1'
+                                        }}
+                                        value={newComment}
+                                        onKeyUp={handleComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        required={true}
+                                    ></Form.Control>
+
+                                    {!!comments?.length && comments.map((cmt, index) => (
+                                        <Row key={index} className="py-2">
+                                            <Col>
+                                                <Row className="align-items-center" style={{ minHeight: '50px' }}>
+                                                    <Col md={1}>
+                                                        <Image src={`${AWS_FOLDER.IMAGE}${cmt.user?.profile?.avatar}`} roundedCircle style={{ width: '40px', height: '40px' }} />
+                                                    </Col>
+                                                    <Col>
+                                                        <div style={{ backgroundColor: 'rgb(232 235 237)', borderRadius: '20px 20px', paddingLeft: '10px' }} className="py-2">
+                                                            <Row>
+                                                                <Col>
+                                                                    <div style={{ fontWeight: 'bold', color: '#3f3ff2' }}>{cmt.user?.profile?.firstName} {cmt.user?.profile?.lastName}</div>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col>
+                                                                    <div>{cmt.content}</div>
+                                                                </Col>
+                                                            </Row>
                                                         </div>
-                                                    </Row>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
-                                ))}
-                            </ListGroup.Item>
-                        )}
+                                                        <Row>
+                                                            <div style={{ fontSize: '10px', paddingLeft: '20px' }}>
+                                                                {moment(cmt.createdAt).fromNow()}
+                                                            </div>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                        </Row>
+                                    ))}
+                                </ListGroup.Item>
+                            )
+                        }
                     </ListGroup>
                 </Col>
             </Row>

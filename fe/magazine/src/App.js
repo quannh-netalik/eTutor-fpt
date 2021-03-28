@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import BlogDetail from './pages/BlogDetail';
 import Faculty from './pages/Faculty';
+import CreateBlog from './pages/BlogDetail/CreateBlog/CreateBlog';
 
 const App = () => {
     return (
@@ -15,10 +16,11 @@ const App = () => {
             <MainLayout>
                 <Switch>
                     <Route path="/login" exact component={Login} />
-                    <PrivateRoute path="/" exact component={Dashboard} />
                     <PrivateRoute path="/profile/:id" exact component={Profile} />
-                    <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
+                    <PrivateRoute path="/" exact component={Dashboard} />
                     <PrivateRoute path="/faculty" exact component={Faculty} />
+                    <PrivateRoute path="/blog/create" role="student" exact component={CreateBlog} />
+                    <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
                     <Route path="*" component={NotFound} />
                 </Switch>
             </MainLayout>

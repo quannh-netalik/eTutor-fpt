@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import imageCompression from 'browser-image-compression';
 
 import {
     BLOG_DETAIL_REQUEST,
@@ -8,6 +9,9 @@ import {
     BLOG_LIST_REQUEST,
     BLOG_LIST_SUCCESS,
     BLOG_LIST_FAIL,
+    BLOG_CREATE_REQUEST,
+    BLOG_CREATE_SUCCESS,
+    BLOG_CREATE_FAIL,
 } from '../constants/blog.reducer';
 import { API_CONFIG } from '../config';
 import { getToken } from '../utils';
@@ -85,5 +89,61 @@ export const downloadBlogFile = ({ fileId, fileName, blogId }) => async () => {
         link.parentNode.removeChild(link);
     } catch (error) {
         console.log(error.response?.data?.message || error.message);
+    }
+};
+
+export const blogCreateAction = ({body, bgImage, file}) => async (dispatch) => {
+    try {
+        dispatch({ type: BLOG_CREATE_REQUEST });
+        const token = getToken();
+        // 1. create blog
+        const { data: { data } } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs`, body, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        // 2. upload bgImage (check if existed bgImage)
+        if (bgImage.name) {
+            const uploadBgImage = await imageCompression(bgImage, {
+                maxSizeMB: 0.1,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true,
+            });
+
+            const payloadBgImage = new FormData();
+            payloadBgImage.append('bgImage', uploadBgImage);
+
+            await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs/${data._id}/bg-image`, payloadBgImage, {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+        }
+
+        // 3. upload file (check if existed file)
+        if (file.name) {
+            const payloadFile = new FormData();
+            payloadFile.append('files', file);
+
+            await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs/${data._id}/files`, payloadFile, {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+        }
+
+        dispatch({
+            type: BLOG_CREATE_SUCCESS,
+            payload: data
+        });
+    } catch (error) {
+        dispatch({
+            type: BLOG_CREATE_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
     }
 };
