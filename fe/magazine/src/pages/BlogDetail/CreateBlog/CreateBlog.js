@@ -10,7 +10,7 @@ import Loader from '../../../components/common/Loader';
 import Message from '../../../components/common/Message';
 
 import { formatDate } from '../../../utils';
-import { BLOG_CREATE_RESET } from '../../../constants/blog.reducer';
+import { BLOG_CREATE_RESET } from '../../../constants/blog.constant';
 
 const CreateBlog = ({ history, location }) => {
     const query = new URLSearchParams(location.search);

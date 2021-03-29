@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import BlogDetail from './pages/BlogDetail';
 import Faculty from './pages/Faculty';
 import CreateBlog from './pages/BlogDetail/CreateBlog/CreateBlog';
+import Chat from './pages/Chat';
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                     <PrivateRoute path="/faculty" exact component={Faculty} />
                     <PrivateRoute path="/blog/create" role="student" exact component={CreateBlog} />
                     <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
+                    <PrivateRoute path="/chat" exact component={Chat} />
                     <Route path="*" component={NotFound} />
                 </Switch>
             </MainLayout>

@@ -13,7 +13,7 @@ import {
     BLOG_UPDATE_SUCCESS,
     BLOG_UPDATE_FAIL,
     BLOG_UPDATE_RESET,
-} from '../constants/blog.reducer';
+} from '../constants/blog.constant';
 
 const blogDetailReducer = (state = { blog: [] }, action) => {
     switch (action.type) {

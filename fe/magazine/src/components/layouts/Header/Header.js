@@ -31,6 +31,9 @@ const Header = () => {
                                     <LinkContainer to="/faculty">
                                         <Nav.Link>Faculty<i className="fas fa-chalkboard-teacher"></i></Nav.Link>
                                     </LinkContainer>
+                                    <LinkContainer to="/chat">
+                                        <Nav.Link>Chat<i className="fas fa-chalkboard-teacher"></i></Nav.Link>
+                                    </LinkContainer>
                                     <NavDropdown title={`Mr. ${user.profile.firstName}`} id="username">
                                         <LinkContainer to={`/profile/${user._id}`}>
                                             <NavDropdown.Item>

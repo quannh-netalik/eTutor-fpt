@@ -5,6 +5,7 @@ import termRoute from './term.route.js';
 import blogRoute from './blog.route.js';
 import commentRoute from './comment.route.js';
 import reportRoute from './report.route.js';
+import messageRoute from './message.route.js';
 
 import { validateRequest } from '../middlewares/index.js';
 import * as userValidator from '../controllers/user/user.validator.js';
@@ -36,4 +37,7 @@ export default (app) => {
 
     // routing to report
     reportRoute(router);
+
+    // routing to message
+    messageRoute(router);
 };
