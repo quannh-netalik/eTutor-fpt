@@ -3,11 +3,13 @@ import mongoDb from 'mongodb';
 
 import { Blog } from '../../models/blog.model.js';
 import { Comment } from '../../models/comment.model.js';
+import { User } from '../../models/user.model.js';
 import { Faculty } from '../../models/faculty.model.js';
 import { Term } from '../../models/term.model.js';
 import { sanitizeUpdateData } from './blog.validator.js';
 import { downloadAWS, uploadAWS } from '../../common/aws.js';
 import { AWS_FOLDER, E_TUTOR_BUCKET } from '../../common/enum.js';
+import { mailer } from '../../common/mailer.js';
 import { zipFile } from '../../utils/index.js';
 export const getBlogService = async (blogId) => {
     const response = {
@@ -159,6 +161,24 @@ export const createBlogService = async ({ data, user: currentUser }) => {
             createdBy: currentUser._id,
             faculty: data.faculty,
             term: data.term,
+        });
+
+        const coordinator = await User.find({
+            'profile.faculty': data.faculty,
+            'profile.role': 'coordinator',
+        });
+
+        await mailer({
+            email: coordinator.map(({ email }) => email),
+            subject: `New Blog Request from ${currentUser.profile.firstName} ${currentUser.profile.lastName}`,
+            content: `
+                <h1>New Blog request are pending</h1><br/><br/>
+
+                <div>Blog Title: ${blog.title}</div><br/>
+                <div>Content: ${blog.content}</div><br/>
+                <div>Faculty: ${faculty.name}</div><br/>
+                <div>Term: ${term.name}</div><br/>
+            `,
         });
 
         response.data = await blog
