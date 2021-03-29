@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12-alpine
 
 RUN apt-get update && apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
