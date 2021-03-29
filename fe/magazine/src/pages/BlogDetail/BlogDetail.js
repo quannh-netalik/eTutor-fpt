@@ -14,10 +14,11 @@ import { AWS_FOLDER } from '../../config';
 import { formatDate } from '../../utils';
 import FacultyInfo from '../../components/FacultyInfo';
 import TermInfo from '../../components/TermInfo';
+import BlogLabel from '../../components/common/BlogLabel';
 
 const BlogDetail = ({ match, location }) => {
     const query = new URLSearchParams(location.search);
-    const redirect = query.get('redirect');
+    const redirect = location.search ? query.get('redirect') : '/';
 
     const dispatch = useDispatch();
     const [currentBlog, setCurrentBlog] = useState({});
@@ -92,18 +93,17 @@ const BlogDetail = ({ match, location }) => {
                             <Row>
                                 <Col md={8} className="d-flex">
                                     <h1>{currentBlog.title}</h1>
-                                    <div
-                                        className="py-2 px-3"
-                                        style={{
-                                            fontSize: 24,
-                                            paddingTop: 10,
-                                            cursor: 'pointer',
-                                            }}
-                                    >
-                                        <LinkContainer to={`/blog/edit/${currentBlog._id}`}>
-                                            <i className="fas fa-edit"></i>
-                                        </LinkContainer>
-                                    </div>
+                                    {(
+                                        user.profile.role === 'coordinator' ||
+                                        (user.profile.role === 'student' === currentBlog.createdBy?._id)
+                                    ) && (
+                                        <div className="py-2 px-3" style={{ fontSize: 24, paddingTop: 10, cursor: 'pointer'  }}>
+                                            <LinkContainer to={`/blog-edit/${currentBlog._id}`}>
+                                                <i className="fas fa-edit"></i>
+                                            </LinkContainer>
+                                        </div>
+                                    )}
+
                                 </Col>
                                 <Col className="align-items-center" style={{ paddingTop: '10px' }}>
                                     <Row>
@@ -111,6 +111,7 @@ const BlogDetail = ({ match, location }) => {
                                         <Col>
                                             <div>{currentBlog.createdBy?.profile?.firstName} {currentBlog.createdBy?.profile?.lastName}</div>
                                             <div>{formatDate(currentBlog.createdAt)}</div>
+                                            <BlogLabel status={currentBlog.status} />
                                         </Col>
                                     </Row>
                                 </Col>

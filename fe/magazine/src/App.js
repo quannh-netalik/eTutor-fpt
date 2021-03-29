@@ -20,9 +20,9 @@ const App = () => {
                     <PrivateRoute path="/profile/:id" exact component={Profile} />
                     <PrivateRoute path="/" exact component={Dashboard} />
                     <PrivateRoute path="/faculty" exact component={Faculty} />
+                    <PrivateRoute path="/blog/:id" component={BlogDetail} />
                     <PrivateRoute path="/blog/create" role="student" exact component={CreateBlog} />
-                    <PrivateRoute path="/blog/edit/:id" exact component={EditBlog} />
-                    <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
+                    <PrivateRoute path="/blog-edit/:id/" exact component={EditBlog} />
                     <Route path="*" component={NotFound} />
                 </Switch>
             </MainLayout>

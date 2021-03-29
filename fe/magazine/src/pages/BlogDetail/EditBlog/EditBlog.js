@@ -152,17 +152,19 @@ const EditBlog = ({ match, history }) => {
                             ></Form.Control>
                         </Form.Group>
 
-                        <Form.Group controlId="status">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control as="select" value={status} onChange={(e) => setStatus(e.target.value)}>
+                        {user.profile.role === 'coordinator' && (
+                            <Form.Group controlId="status">
+                                <Form.Label>Status</Form.Label>
+                                <Form.Control as="select" value={status} onChange={(e) => setStatus(e.target.value)}>
 
-                                <option value="approve">Approve</option>
-                                {currentBlog.status === 'pending' && (
-                                    <option value="pending">Pending</option>
-                                )}
-                                <option value="reject">Reject</option>
-                            </Form.Control>
-                        </Form.Group>
+                                    <option value="approve">Approve</option>
+                                    {currentBlog.status === 'pending' && (
+                                        <option value="pending">Pending</option>
+                                    )}
+                                    <option value="reject">Reject</option>
+                                </Form.Control>
+                            </Form.Group>
+                        )}
                     </Col>
                 </Row>
                 <Row>
@@ -235,7 +237,7 @@ const EditBlog = ({ match, history }) => {
                 <Row>
                     <Col>
                         <div className="d-flex justify-content-between">
-                            <LinkContainer to="/faculty">
+                            <LinkContainer to={`/blog/${currentBlog._id}`}>
                                 <Button variant="secondary">Back</Button>
                             </LinkContainer>
                             <Button type="submit" variant="success">Update</Button>
