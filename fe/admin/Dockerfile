@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
+RUN npm install core-js
 RUN npm install
 
 COPY . .
