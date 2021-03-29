@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import BlogDetail from './pages/BlogDetail';
 import Faculty from './pages/Faculty';
 import CreateBlog from './pages/BlogDetail/CreateBlog/CreateBlog';
+import EditBlog from './pages/BlogDetail/EditBlog/EditBlog';
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                     <PrivateRoute path="/" exact component={Dashboard} />
                     <PrivateRoute path="/faculty" exact component={Faculty} />
                     <PrivateRoute path="/blog/create" role="student" exact component={CreateBlog} />
+                    <PrivateRoute path="/blog/edit/:id" exact component={EditBlog} />
                     <PrivateRoute path="/blog/:id" exact component={BlogDetail} />
                     <Route path="*" component={NotFound} />
                 </Switch>

@@ -90,8 +90,20 @@ const BlogDetail = ({ match, location }) => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Row>
-                                <Col md={8}>
+                                <Col md={8} className="d-flex">
                                     <h1>{currentBlog.title}</h1>
+                                    <div
+                                        className="py-2 px-3"
+                                        style={{
+                                            fontSize: 24,
+                                            paddingTop: 10,
+                                            cursor: 'pointer',
+                                            }}
+                                    >
+                                        <LinkContainer to={`/blog/edit/${currentBlog._id}`}>
+                                            <i className="fas fa-edit"></i>
+                                        </LinkContainer>
+                                    </div>
                                 </Col>
                                 <Col className="align-items-center" style={{ paddingTop: '10px' }}>
                                     <Row>
