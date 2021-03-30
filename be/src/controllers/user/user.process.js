@@ -79,13 +79,24 @@ export const listUserService = async (filter = {}, limit, skip, currentUser) => 
             .limit(limit)
             .skip(skip);
 
-        response.data = {
-            total,
-            limit,
-            skip,
-            totalPage: Math.ceil(total / limit),
-            data: users,
-        };
+        if (limit === -1) {
+            const fullList =  await User.find(filterUserList);
+            response.data = {
+                total: fullList.length,
+                limit: 0,
+                skip: 0,
+                totalPage: 1,
+                data: fullList,
+            };
+        } else {
+            response.data = {
+                total,
+                limit,
+                skip,
+                totalPage: Math.ceil(total / limit),
+                data: users,
+            };
+        }
     } catch (err) {
         response.statusCode = 500;
         response.message = err.message;
