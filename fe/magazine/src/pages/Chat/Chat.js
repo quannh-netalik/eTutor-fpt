@@ -31,6 +31,14 @@ const Chat = () => {
         }
     };
 
+    const handleShowMessageBox = (id) => {
+        setReceiverId(id);
+        const user = (userList && Array.isArray(userList.data)) && userList.data.find(usr => usr._id === id);
+        if (user) {
+            setReceiverName(user.profile.firstName + ' ' + user.profile.lastName);
+        }
+    };
+
     useEffect(() => {
         dispatch(getUserListAction());
         dispatch(messageListAction());
@@ -38,7 +46,7 @@ const Chat = () => {
 
     useEffect(() => {
         socket = io(endpoint);
-        const room = 'Joker';
+        const room = 'magazine';
 
         socket.emit('room', room);
 
@@ -82,7 +90,7 @@ const Chat = () => {
                                 (userList && Array.isArray(userList.data)) && userList.data.filter(usr => usr._id !== userLogin._id && usr.profile.role !== 'admin').map((usr, index) => (
                                     <ListGroup.Item key={index}
                                         style={{ cursor: 'pointer' }}
-                                        onClick={() => setReceiverId(usr._id)}
+                                        onClick={() => handleShowMessageBox(usr._id)}
                                     >
                                         {usr.profile.firstName + ' ' + usr.profile.lastName}
                                     </ListGroup.Item>
@@ -99,7 +107,7 @@ const Chat = () => {
                                 (messages && Array.isArray(messages)) && messages.filter(msg =>
                                     (msg.sender._id === userLogin.user._id && msg.receiver._id === receiverId) ||
                                     (msg.sender._id === receiverId && msg.receiver._id === userLogin.user._id)
-                                ).map((msg, index) => {
+                                ).map((msg, index) => (
                                     msg.sender._id !== userLogin.user._id ? (
                                         <Card.Body key={index}>
                                             <Card.Title>{msg.sender.profile.firstName}</Card.Title>
@@ -114,8 +122,8 @@ const Chat = () => {
                                                 {msg.message}
                                             </Card.Text>
                                         </Card.Body>
-                                    );
-                                })
+                                    )
+                                ))
                             }
                         </Card.Body>
                         <Form.Group>

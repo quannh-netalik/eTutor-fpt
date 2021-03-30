@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
         { $unwind: '$receiver' },
       ]);
       console.log(msg.message);
-      const room = 'Joker';
+      const room = 'magazine';
       io.to(room).emit('Send message back', message);
     } catch (error) {
       console.log(error);
