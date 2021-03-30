@@ -82,6 +82,10 @@ export const listUserService = async (filter = {}, limit, skip, currentUser) => 
         if (limit === -1) {
             const fullList =  await User.find(filterUserList);
             response.data = {
+                total: fullList.length,
+                limit: 0,
+                skip: 0,
+                totalPage: 1,
                 data: fullList,
             };
         } else {
