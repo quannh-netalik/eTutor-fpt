@@ -32,7 +32,7 @@ const Chat = () => {
     };
 
     useEffect(() => {
-        dispatch(getUserListAction());
+        dispatch(getUserListAction({ limit: -1 }));
         dispatch(messageListAction());
     }, []);
 
