@@ -54,7 +54,7 @@ const TermInfo = ({ isSelectTermList, termList, handleChangeTerm, currentTerm })
                     <strong>End Date: </strong>
                 </Col>
                 <Col>
-                    <div>{formatDate(currentTerm.startDate)}</div>
+                    <div>{formatDate(currentTerm.endDate)}</div>
                 </Col>
             </Row>
             <Row className="py-2">

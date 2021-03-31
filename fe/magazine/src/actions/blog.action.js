@@ -174,3 +174,64 @@ export const updateBlogAction = ({id, body}) => async (dispatch) => {
         });
     }
 };
+
+export const uploadBlogBgImageAction = (blogId, bgImage) => async () => {
+    try {
+        const token = getToken();
+
+        const uploadBgImage = await imageCompression(bgImage, {
+            maxSizeMB: 0.1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+        });
+
+        const payloadBgImage = new FormData();
+        payloadBgImage.append('bgImage', uploadBgImage);
+
+        await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs/${blogId}/bg-image`, payloadBgImage, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const uploadBlogFileAction = (blogId, file) => async (dispatch) => {
+    try {
+        const token = getToken();
+
+        const payloadFile = new FormData();
+        payloadFile.append('files', file);
+
+        const { data: { data } } = await axios.post(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs/${blogId}/files`, payloadFile, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+
+        dispatch({
+            type: BLOG_DETAIL_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const removeFileBlogAction = ({ blogId, fileId }) => async () => {
+    try {
+        const token = getToken();
+        await axios.delete(`${API_CONFIG.END_POINT}${API_CONFIG.PREFIX}/blogs/${blogId}/files/${fileId}`, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+    } catch(error) {
+        console.log(error);
+    }
+};
