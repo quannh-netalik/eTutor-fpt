@@ -95,7 +95,7 @@ const BlogDetail = ({ match, location }) => {
                                     <h1>{currentBlog.title}</h1>
                                     {(
                                         user.profile.role === 'coordinator' ||
-                                        (user.profile.role === 'student' === currentBlog.createdBy?._id)
+                                        (user.profile.role === 'student' && user._id === currentBlog.createdBy?._id)
                                     ) && (
                                         <div className="py-2 px-3" style={{ fontSize: 24, paddingTop: 10, cursor: 'pointer'  }}>
                                             <LinkContainer to={`/blog-edit/${currentBlog._id}`}>
