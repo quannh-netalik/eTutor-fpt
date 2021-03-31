@@ -15,7 +15,7 @@ import {
     BLOG_UPDATE_REQUEST,
     BLOG_UPDATE_SUCCESS,
     BLOG_UPDATE_FAIL,
-} from '../constants/blog.reducer';
+} from '../constants/blog.constant';
 import { API_CONFIG } from '../config';
 import { getToken } from '../utils';
 

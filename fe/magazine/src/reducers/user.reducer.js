@@ -7,6 +7,9 @@ import {
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
     USER_UPDATE_RESET,
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL
 } from '../constants/user.constant';
 
 const defaultLoginState = {};
@@ -59,7 +62,26 @@ const userUpdateReducer = (state = { user: {} }, action) => {
     }
 };
 
+const userListReducer = (state = { userList: [] }, action) => {
+    switch (action.type) {
+        case USER_LIST_REQUEST:
+            return {
+                loading: true
+            };
+        case USER_LIST_SUCCESS:
+            return {
+                loading: false,
+                userList: action.payload
+            };
+        case USER_LIST_FAIL:
+            return {};
+        default:
+            return state;
+    }
+};
+
 export default {
     userLogin: userLoginReducer,
     userUpdate: userUpdateReducer,
+    userList: userListReducer
 };

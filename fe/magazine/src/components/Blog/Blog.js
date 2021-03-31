@@ -10,7 +10,7 @@ import { formatDate } from '../../utils';
 
 import './index.css';
 import { updateBlogAction } from '../../actions/blog.action';
-import { BLOG_LIST_SUCCESS } from '../../constants/blog.reducer';
+import { BLOG_LIST_SUCCESS } from '../../constants/blog.constant';
 
 const Blog = ({ blog, redirect, censorship }) => {
     const dispatch = useDispatch();

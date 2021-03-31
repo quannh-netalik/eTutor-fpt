@@ -8,7 +8,7 @@ import { blogDetailAction, removeFileBlogAction, updateBlogAction, uploadBlogBgI
 import Loader from '../../../components/common/Loader';
 import Message from '../../../components/common/Message';
 import { AWS_FOLDER } from '../../../config';
-import { BLOG_DETAIL_SUCCESS } from '../../../constants/blog.reducer';
+import { BLOG_DETAIL_SUCCESS } from '../../../constants/blog.constant';
 
 import { formatDate } from '../../../utils';
 
@@ -215,7 +215,7 @@ const EditBlog = ({ match, history }) => {
                                                         </div>
                                                     </div>
                                                     <div onClick={() => handleRemoveFileBlog(file?._id)} style={{ cursor: 'pointer' }}>
-                                                        <i style={{fontSize: 22}} className="far fa-times-circle"></i>
+                                                        <i style={{ fontSize: 22 }} className="far fa-times-circle"></i>
                                                     </div>
                                                 </div>
                                                 <div className="py-2">
