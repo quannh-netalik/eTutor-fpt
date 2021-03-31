@@ -29,10 +29,10 @@ const Header = () => {
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="ml-auto">
                                     <LinkContainer to="/faculty">
-                                        <Nav.Link>Faculty<i className="fas fa-chalkboard-teacher"></i></Nav.Link>
+                                        <Nav.Link>Faculty <i className="fas fa-chalkboard-teacher"></i></Nav.Link>
                                     </LinkContainer>
                                     <LinkContainer to="/chat">
-                                        <Nav.Link>Chat<i className="fas fa-chalkboard-teacher"></i></Nav.Link>
+                                        <Nav.Link>Chat <i className="far fa-comments"></i></Nav.Link>
                                     </LinkContainer>
                                     <NavDropdown title={`Mr. ${user.profile.firstName}`} id="username">
                                         <LinkContainer to={`/profile/${user._id}`}>

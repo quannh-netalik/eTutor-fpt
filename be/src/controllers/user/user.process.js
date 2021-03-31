@@ -76,11 +76,13 @@ export const listUserService = async (filter = {}, limit, skip, currentUser) => 
 
         const total = await User.countDocuments(filterUserList);
         const users = await User.find(filterUserList)
+            .populate({ path: 'profile.faculty' })
             .limit(limit)
             .skip(skip);
 
         if (limit === -1) {
-            const fullList =  await User.find(filterUserList);
+            const fullList = await User.find(filterUserList)
+                .populate({ path: 'profile.faculty' });
             response.data = {
                 total: fullList.length,
                 limit: 0,
@@ -200,7 +202,7 @@ export const updateUserService = async ({ userId, data }) => {
         const user = await User.findOneAndUpdate({
             _id: userId
         }, updateData, { new: true })
-        .populate({ path: 'profile.faculty', select: 'name isActive isDeleted'});
+            .populate({ path: 'profile.faculty', select: 'name isActive isDeleted' });
         if (!user) {
             return {
                 statusCode: 404,
@@ -270,7 +272,7 @@ export const uploadUserAvatar = async ({ userId, avatar }) => {
     try {
         const user = await User.findOne({ _id: userId })
             .select('email profile createdAt')
-            .populate({ path: 'profile.faculty', select: 'name isActive isDeleted'});
+            .populate({ path: 'profile.faculty', select: 'name isActive isDeleted' });
         if (!user) {
             return {
                 statusCode: 404,
